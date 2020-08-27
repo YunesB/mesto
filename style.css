@@ -14,6 +14,7 @@
     background-size: 100% 100%;
     color: white;
     margin: 0 auto;
+    z-index: 1;
 }
 
 .header {
@@ -68,7 +69,7 @@
     display: flex;
 }
 
-.profile-info__text {
+.profile-info__container {
     display: flex;
     flex-direction: column;
     align-content: center;
@@ -83,12 +84,105 @@
 }
 
 .profile-info__customization {
+    position: relative;
     width: 24px;
     height: 24px;
     background-image: url(./images/pencil.svg);
     background-repeat: no-repeat;
     background-position: center;
     border: 1px solid white;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.popup__container {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    width: 430px;
+    height: 330px;
+    background-color: white;
+    border-radius: 10px;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    opacity: 1;
+    -webkit-transition: opacity .5s, visibility 0s linear .5s;
+    transition: opacity .5s, visibility 0s linear .5s;
+    z-index: 3;
+    color: black;
+}
+
+.popup__heading {
+    max-width: 330px;
+    margin: 34px 36px 48px 34px;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px;
+}
+
+.popup__form {
+    display: flex;
+    flex-direction: column;
+    max-width: 358px;
+    margin: 0 36px 36px 36px;
+}
+
+.popup__input_name {
+    border: 0;
+    margin-bottom: 29.74px; 
+    padding-bottom: 13.26px;
+    border-bottom: 1px solid gray;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.popup__input_job {
+    border: 0;
+    margin-bottom: 0; 
+    padding-bottom: 13.26px;
+    border-bottom: 1px solid gray;
+    font-size: 14px;
+    line-height: 17px; 
+}
+
+.popup__button {
+    color: white;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    background-color: black;
+    width: 358px;
+    height: 50.15px;
+    border-radius: 2px;
+    border: none;
+    outline: none;
+    margin-top: 48px;
+}
+
+.popup__button:hover {
+    cursor: pointer;
+    opacity: .8;    
+}
+
+.popup__close {
+    position: absolute;
+    top: -47px;
+    right: -47px;
+}
+
+.popup__close:hover {
+    cursor: pointer;
+    opacity: .6;
 }
 
 .profile-info__name {
@@ -98,7 +192,7 @@
     margin: 0 17px 0 0;
 }
 
-.profile-info__occupance {
+.profile-info__job {
     font-weight: normal;
     font-size: 18px;
     line-height: 22px;
@@ -127,6 +221,7 @@
     background-repeat: no-repeat;
     background-position: center;
     background-color: black;
+    outline: none;
 }
 
 .profile__button:active {
@@ -139,84 +234,6 @@
     transition: .2s;
     opacity: .6;   
 }
-
-.popup {
-    width: 430px;
-    height: 330px;
-    background-color: white;
-    border-radius: 10px;
-    margin: auto;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    opacity: 0;
-    -webkit-transition: opacity .5s, visibility 0s linear .5s;
-    transition: opacity .5s, visibility 0s linear .5s;
-    z-index: 1;
-}
-
-
-
-.popup:target {
-    visibility: visible;
-    opacity: 1;
-    /* cancel visibility transition delay */
-    -webkit-transition-delay: 0s;
-    transition-delay: 0s;
-  }
-
-  .popup-close {
-    position: absolute;
-    padding: 10px;
-    max-width: 500px;
-    border-radius: 10px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background: rgba(255,255,255,.9);
-  }
-  
-  .popup .close {
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    padding: 5px;
-    color: #000;
-    transition: color .3s;
-    font-size: 2em;
-    line-height: .6em;
-    font-weight: bold;
-  }
-
-  .popup .close:hover {
-    color: #00E5EE;
-  }
-  
-  .close-popup {
-    background: rgba(0,0,0,.7);
-    cursor: default;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    opacity: 0;
-    visibility: hidden;
-    /* "delay" the visibility transition */
-    -webkit-transition: opacity .5s, visibility 0s linear .5s;
-    transition: opacity .5s, visibility 0s linear .5s;
-  }
-  
-  .popup:target + .close-popup{  
-    opacity: 1;
-    visibility: visible;
-    /* cancel visibility transition delay */
-    -webkit-transition-delay: 0s;
-    transition-delay: 0s;
-}
-
-
 
 
 .elements {

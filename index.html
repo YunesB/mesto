@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./images/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="./vendor/normalize.css">
     <link rel="stylesheet" href="./style.css">
     <title>Mesto Russia</title>
 </head>
@@ -15,28 +16,21 @@
       </a>
     </header>
     <main class="content">
-
       <section class="profile">
         <div class="profile-info">
           <div class="profile-info__image"></div>
-          <div class="profile-info__text">
+          <div class="profile-info__container">
           <div class="profile-info__box">
             <p class="profile-info__name">Жак-Ив Кусто</p>
-            <a class="profile-info__link" href="#">
+            <a class="profile-info__link" href="#" id="link">
               <div class="profile-info__customization">
-                <div id="popup1" class="popup">
-                  <a href="#" class="close">&times;</a>
-                  <h2>The Popup Has Arrived</h2>
-                  <p>This popup can be closed by clicking the fancy <b>×</b> in the top right corner or by clicking outside the popup box!</p>
-                </div>
-                <a href="#" class="close-popup"></a>
               </div>
             </a>
           </div>
-          <p class="profile-info__occupance">Исследователь океана</p>
+          <p class="profile-info__job">Исследователь океана</p>
           </div>
         </div>
-        <button type="#" class="profile__button"></button>
+        <button type="submit" class="profile__button"></button>
       </section>
       <section class="elements">
         <ul class="cards">
@@ -88,7 +82,18 @@
     <footer class="footer">
       <p class="footer__credit">© 2020 Mesto Russia</p>
     </footer>
+    <div class="popup">
+      <div class="popup__container">
+        <h2 class="popup__heading">Редактировать профиль</h2>
+        <form class="popup__form">
+          <input type="text" class="popup__input_name" value="Жак-Ив Кусто" placeholder="Имя">
+          <input type="text" class="popup__input_job" value="Исследователь океана" placeholder="О себе">
+          <button type="submit" class="popup__button">Сохранить</button>
+        </form>
+        <img src="images/close_icon.svg" class="popup__close" alt="Закрыть окно" id="popupClose">
+      </div>
+    </div>
   </div>
-  <script src="#"></script>
+  <script src="./script.js"></script>
 </body>
 </html>
