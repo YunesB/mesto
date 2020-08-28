@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="./images/icon.ico" type="image/x-icon">
-    <link rel="stylesheet" href="./vendor/normalize.css">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./pages/index.css">
     <title>Mesto Russia</title>
 </head>
 <body>
   <div class="page">
     <header class="header">
       <a href="#" class="header__link">
-        <img src="./images/logo.svg" class="header__logo">
+        <img src="./images/logo.svg" class="header__logo" alt="Логотип">
       </a>
     </header>
     <main class="content">
@@ -20,14 +19,11 @@
         <div class="profile-info">
           <div class="profile-info__image"></div>
           <div class="profile-info__container">
-          <div class="profile-info__box">
-            <p class="profile-info__name">Жак-Ив Кусто</p>
-            <a class="profile-info__link" href="#" id="link">
-              <div class="profile-info__customization">
-              </div>
-            </a>
-          </div>
-          <p class="profile-info__job">Исследователь океана</p>
+            <div class="profile-info__name-box">
+              <h1 class="profile-info__name">Жак-Ив Кусто</h1>
+              <div class="profile-info__customization"></div>
+            </div>
+          <h2 class="profile-info__job">Исследователь океана</h2>
           </div>
         </div>
         <button type="submit" class="profile__button"></button>
@@ -35,45 +31,45 @@
       <section class="elements">
         <ul class="cards">
           <li class="card">
-            <img src="images/elements/karachaevsk.png">
-            <div class="card__text-box">
+            <img src="images/elements/karachaevsk.png" alt="Карачаевск">
+            <div class="card__box">
               <h2 class="card__title">Карачаевск</h2>
-              <img src="./images/like.svg">
+              <div class="card__like"></div>
             </div>
           </li>
           <li class="card">
-            <img src="images/elements/gora-elbrus.png">
-            <div class="card__text-box">
+            <img src="images/elements/gora-elbrus.png" alt="Гора Эльбрус">
+            <div class="card__box">
               <h2 class="card__title">Гора Эльбрус</h2>
-              <img src="./images/like.svg">
+              <div class="card__like"></div>
             </div>
           </li>
           <li class="card">
-            <img src="images/elements/dombai.png">
-            <div class="card__text-box">
+            <img src="images/elements/dombai.png" alt="Домбай">
+            <div class="card__box">
               <h2 class="card__title">Домбай</h2>
-              <img src="./images/like.svg">
+              <div class="card__like"></div>
             </div>
           </li>
           <li class="card">
-            <img src="images/elements/gora-elbrus.png">
-            <div class="card__text-box">
+            <img src="images/elements/gora-elbrus.png" alt="Гора Эльбрус">
+            <div class="card__box">
               <h2 class="card__title">Гора Эльбрус</h2>
-              <img src="./images/like.svg">
+              <div class="card__like"></div>
             </div>
           </li>
           <li class="card">
-            <img src="images/elements/dombai.png">
-            <div class="card__text-box">
+            <img src="images/elements/dombai.png" alt="Домбай">
+            <div class="card__box">
               <h2 class="card__title">Домбай</h2>
-              <img src="./images/like.svg">
+              <div class="card__like"></div>
             </div>
           </li>
           <li class="card">
-            <img src="images/elements/karachaevsk.png">
-            <div class="card__text-box">
+            <img src="images/elements/karachaevsk.png" alt="Карачаево-Черкесия">
+            <div class="card__box">
               <h2 class="card__title">Карачаево-Черкесия</h2>
-              <img src="./images/like.svg">
+              <div class="card__like"></div>
             </div>
           </li>
         </ul>
@@ -86,14 +82,14 @@
       <div class="popup__container">
         <h2 class="popup__heading">Редактировать профиль</h2>
         <form class="popup__form">
-          <input type="text" class="popup__input_name" value="Жак-Ив Кусто" placeholder="Имя">
-          <input type="text" class="popup__input_job" value="Исследователь океана" placeholder="О себе">
+          <input maxlength="20" type="text" class="popup__input-name" value="Жак-Ив Кусто" placeholder="Имя">
+          <input maxlength="30" type="text" class="popup__input-job" value="Исследователь океана" placeholder="О себе">
           <button type="submit" class="popup__button">Сохранить</button>
         </form>
-        <img src="images/close_icon.svg" class="popup__close" alt="Закрыть окно" id="popupClose">
+        <img src="images/close_icon.svg" class="popup__close" alt="Закрыть окно">
       </div>
     </div>
   </div>
-  <script src="./script.js"></script>
+  <script src="./scripts/index.js"></script>
 </body>
 </html>
