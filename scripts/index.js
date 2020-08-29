@@ -1,37 +1,47 @@
+/* variables */
+
 let popup = document.querySelector('.popup');
 let popupClose = document.querySelector('.popup__close');
-let popupSave = document.querySelector('.popup__button');
 let popupOpen = document.querySelector('.profile-info__customization');
 
-popupOpen.addEventListener('click', function(){
-    popup.setAttribute('style', 'display:flex');
-});
+let nameInput = document.querySelector('.popup__input_data_name');
+let jobInput = document.querySelector('.popup__input_data_job');
+let nameOutput = document.querySelector('.profile-info__name');
+let jobOutput = document.querySelector('.profile-info__job');
 
-popupClose.addEventListener('click', function(){
-    popup.setAttribute('style', 'display:none');
-});
+let formElement = document.querySelector('.popup__form')
 
-popupSave.addEventListener('click', function(){
-    popup.setAttribute('style', 'display:none');
-});
 
-popup.onclick = function(e){
-    if (event.target == popup) {
-        popup.style.display = 'none';
+/* functions */
+
+function popupOpener() {
+    popup.classList.add('popup_opened');
+    nameInput.setAttribute('value', nameOutput.textContent);
+    jobInput.setAttribute('value', jobOutput.textContent);
+};
+
+function popupCloser() {
+    popup.classList.remove('popup_opened');
+};
+
+function formSubmitHandler (evt) {
+    evt.preventDefault();
+    nameOutput.textContent = nameInput.value;
+    jobOutput.textContent = jobInput.value;
+    popupCloser();
+}
+
+/* Пробовал обхединить 2 функции в одну, но не понял, на какое действие проверяем функцией if? На клик по кнопке?
+Буду признателен, если сможете дать подсказку. Спасибо! */
+
+popup.onclick = function(e) {
+    if (e.target == popup) {
+        popup.classList.remove('popup_opened');
     };
 };
 
-let formElement = document.querySelector('.popup__form')
-function formSubmitHandler (evt) {
-    evt.preventDefault();
-    
-    let nameInput = document.querySelector('.popup__input-name');
-    let jobInput = document.querySelector('.popup__input-job');
-    let nameOutput = document.querySelector('.profile-info__name');
-    let jobOutput = document.querySelector('.profile-info__job');
-
-    nameOutput.textContent = nameInput.value;
-    jobOutput.textContent = jobInput.value;
-}
+/* event listeners */
 
 formElement.addEventListener('submit', formSubmitHandler);
+popupOpen.addEventListener('click', popupOpener);
+popupClose.addEventListener('click', popupCloser);

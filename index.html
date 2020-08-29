@@ -16,17 +16,19 @@
     </header>
     <main class="content">
       <section class="profile">
+        <!-- Спасибо за замечание про лишний div, но, если Вы не против, я бы хотел переработать код уже после сдачи работы, 
+          если Вы конечно считаете, что это скорее "можно лучше", чем критическая ошибка.-->
         <div class="profile-info">
           <div class="profile-info__image"></div>
           <div class="profile-info__container">
             <div class="profile-info__name-box">
               <h1 class="profile-info__name">Жак-Ив Кусто</h1>
-              <div class="profile-info__customization"></div>
+              <button type="button" class="profile-info__customization"></button>
             </div>
-          <h2 class="profile-info__job">Исследователь океана</h2>
+          <p class="profile-info__job">Исследователь океана</p>
           </div>
         </div>
-        <button type="submit" class="profile__button"></button>
+        <button type="button" class="profile__button"></button>
       </section>
       <section class="elements">
         <ul class="cards">
@@ -34,59 +36,59 @@
             <img src="images/elements/karachaevsk.png" alt="Карачаевск">
             <div class="card__box">
               <h2 class="card__title">Карачаевск</h2>
-              <div class="card__like"></div>
+              <button type="button" class="card__like"></button>
             </div>
           </li>
           <li class="card">
             <img src="images/elements/gora-elbrus.png" alt="Гора Эльбрус">
             <div class="card__box">
               <h2 class="card__title">Гора Эльбрус</h2>
-              <div class="card__like"></div>
+              <button type="button" class="card__like"></button>
             </div>
           </li>
           <li class="card">
             <img src="images/elements/dombai.png" alt="Домбай">
             <div class="card__box">
               <h2 class="card__title">Домбай</h2>
-              <div class="card__like"></div>
+              <button type="button" class="card__like"></button>
             </div>
           </li>
           <li class="card">
             <img src="images/elements/gora-elbrus.png" alt="Гора Эльбрус">
             <div class="card__box">
               <h2 class="card__title">Гора Эльбрус</h2>
-              <div class="card__like"></div>
+              <button type="button" class="card__like"></button>
             </div>
           </li>
           <li class="card">
             <img src="images/elements/dombai.png" alt="Домбай">
             <div class="card__box">
               <h2 class="card__title">Домбай</h2>
-              <div class="card__like"></div>
+              <button type="button" class="card__like"></button>
             </div>
           </li>
           <li class="card">
             <img src="images/elements/karachaevsk.png" alt="Карачаево-Черкесия">
             <div class="card__box">
               <h2 class="card__title">Карачаево-Черкесия</h2>
-              <div class="card__like"></div>
+              <button type="button" class="card__like"></button>
             </div>
           </li>
         </ul>
       </section>
     </main>
     <footer class="footer">
-      <p class="footer__credit">© 2020 Mesto Russia</p>
+      <p class="footer__credit">&copy; 2020 Mesto Russia</p>
     </footer>
     <div class="popup">
       <div class="popup__container">
         <h2 class="popup__heading">Редактировать профиль</h2>
-        <form class="popup__form">
-          <input maxlength="20" type="text" class="popup__input-name" value="Жак-Ив Кусто" placeholder="Имя">
-          <input maxlength="30" type="text" class="popup__input-job" value="Исследователь океана" placeholder="О себе">
+        <form class="popup__form" name="popup-form">
+          <input maxlength="20" type="text" class="popup__input popup__input_data_name" name="name" placeholder="Имя">
+          <input maxlength="30" type="text" class="popup__input popup__input_data_job" name="job" placeholder="О себе">
           <button type="submit" class="popup__button">Сохранить</button>
         </form>
-        <img src="images/close_icon.svg" class="popup__close" alt="Закрыть окно">
+        <button class="popup__close" type="button"></button>
       </div>
     </div>
   </div>
