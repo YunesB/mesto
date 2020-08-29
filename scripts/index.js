@@ -13,35 +13,32 @@ let formElement = document.querySelector('.popup__form')
 
 
 /* functions */
+/* Большое спасибо за подробный комментраий, все понятно.
+Отличное ревью, спасибо! */
 
-function popupOpener() {
-    popup.classList.add('popup_opened');
-    nameInput.setAttribute('value', nameOutput.textContent);
-    jobInput.setAttribute('value', jobOutput.textContent);
-};
-
-function popupCloser() {
-    popup.classList.remove('popup_opened');
+function popupToggle() {
+    if (popup.classList.contains('popup_opened') === false) {
+        nameInput.setAttribute('value', nameOutput.textContent);
+        jobInput.setAttribute('value', jobOutput.textContent);
+    }
+    popup.classList.toggle('popup_opened');
 };
 
 function formSubmitHandler (evt) {
     evt.preventDefault();
     nameOutput.textContent = nameInput.value;
     jobOutput.textContent = jobInput.value;
-    popupCloser();
+    popupToggle();
 }
-
-/* Пробовал обхединить 2 функции в одну, но не понял, на какое действие проверяем функцией if? На клик по кнопке?
-Буду признателен, если сможете дать подсказку. Спасибо! */
 
 popup.onclick = function(e) {
     if (e.target == popup) {
-        popup.classList.remove('popup_opened');
+        popupToggle();
     };
 };
 
 /* event listeners */
 
 formElement.addEventListener('submit', formSubmitHandler);
-popupOpen.addEventListener('click', popupOpener);
-popupClose.addEventListener('click', popupCloser);
+popupOpen.addEventListener('click', popupToggle);
+popupClose.addEventListener('click', popupToggle);

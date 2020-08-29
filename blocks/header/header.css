@@ -5,3 +5,10 @@
     padding-bottom: 40.6px;
     border-bottom: 1px solid #545454;
 }
+
+@media screen and (max-width: 425px) {
+    .header {
+        padding-top: 28px;
+        padding-bottom: 31.6px;
+    }
+}
