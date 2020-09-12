@@ -1,5 +1,5 @@
-.popup {
-    display: none;;
+.img-popup {
+    display: none;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -9,7 +9,7 @@
     animation: showBlock .2s linear forwards;
 }
 
-.popup_opened {
+.img-popup_opened {
     display: flex;
     opacity: 1;
 }

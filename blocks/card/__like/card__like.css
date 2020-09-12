@@ -12,9 +12,14 @@
     transition: .2s;
 }
 
+.card__like_state_posted {
+    background-image: url(../../../images/like_posted.svg);
+}
+
 .card__like:active {
     border-color: white;
     outline: none;
+    background-image: url(../../../images/like_posted.svg);
 }
 
 .card__like:focus {
@@ -23,6 +28,6 @@
 }
 
 .card__like:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
     cursor: pointer;
 }

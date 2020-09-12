@@ -1,10 +1,8 @@
-.popup__container {
+.img-popup__container {
     display: flex;
-    flex-direction: column;
     position: fixed;
-    max-width: 430px;
-    width: 100%;
     background-color: white;
+    background-repeat: no-repeat;
     border-radius: 10px;
     margin: auto;
     top: 50%;

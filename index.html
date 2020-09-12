@@ -16,8 +16,6 @@
     </header>
     <main class="content">
       <section class="profile">
-        <!-- Спасибо за замечание про лишний div, но, если Вы не против, я бы хотел переработать код уже после сдачи работы, 
-          если Вы конечно считаете, что это скорее "можно лучше", чем критическая ошибка.-->
         <div class="profile-info">
           <div class="profile-info__image"></div>
           <div class="profile-info__container">
@@ -32,48 +30,6 @@
       </section>
       <section class="elements">
         <ul class="cards">
-          <li class="card">
-            <img src="images/elements/karachaevsk.png" alt="Карачаевск">
-            <div class="card__box">
-              <h2 class="card__title">Карачаевск</h2>
-              <button type="button" class="card__like"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img src="images/elements/gora-elbrus.png" alt="Гора Эльбрус">
-            <div class="card__box">
-              <h2 class="card__title">Гора Эльбрус</h2>
-              <button type="button" class="card__like"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img src="images/elements/dombai.png" alt="Домбай">
-            <div class="card__box">
-              <h2 class="card__title">Домбай</h2>
-              <button type="button" class="card__like"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img src="images/elements/gora-elbrus.png" alt="Гора Эльбрус">
-            <div class="card__box">
-              <h2 class="card__title">Гора Эльбрус</h2>
-              <button type="button" class="card__like"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img src="images/elements/dombai.png" alt="Домбай">
-            <div class="card__box">
-              <h2 class="card__title">Домбай</h2>
-              <button type="button" class="card__like"></button>
-            </div>
-          </li>
-          <li class="card">
-            <img src="images/elements/karachaevsk.png" alt="Карачаево-Черкесия">
-            <div class="card__box">
-              <h2 class="card__title">Карачаево-Черкесия</h2>
-              <button type="button" class="card__like"></button>
-            </div>
-          </li>
         </ul>
       </section>
     </main>
@@ -82,16 +38,33 @@
     </footer>
     <div class="popup">
       <div class="popup__container">
-        <h2 class="popup__heading">Редактировать профиль</h2>
+        <h2 class="popup__heading"></h2>
         <form class="popup__form" name="popup-form">
-          <input maxlength="20" type="text" class="popup__input popup__input_data_name" name="name" placeholder="Имя">
-          <input maxlength="30" type="text" class="popup__input popup__input_data_job" name="job" placeholder="О себе">
-          <button type="submit" class="popup__button">Сохранить</button>
+          <input maxlength="20" type="text" class="popup__input popup__input_data_name" name="name">
+          <input type="text" class="popup__input popup__input_data_job" name="job">
+          <button type="submit" class="popup__button"></button>
         </form>
         <button class="popup__close" type="button"></button>
       </div>
     </div>
-  </div>
+    <div class="img-popup">
+      <div class="img-popup__container">
+        <img src="" class="img-popup__image">
+        <button class="img-popup__close" type="button"></button>
+        <h3 class="img-popup__subline"></h3>
+      </div>
+    </div>
+</div>
+  <template class="card-template">
+    <li class="card">
+      <img src="" alt="#" class="card__image">
+      <button type="button" class="card__delete-button"></button>
+      <div class="card__box">
+        <h2 class="card__title"></h2>
+        <button type="button" class="card__like"></button>
+      </div>
+    </li>
+  </template>
   <script src="./scripts/index.js"></script>
 </body>
 </html>

@@ -31,6 +31,8 @@
 
 /* Блок card */
 @import url('../blocks/card/card.css');
+@import url('../blocks/card/__image/card__image.css');
+@import url('../blocks/card/__delete-button/card__delete-button.css');
 @import url('../blocks/card/__box/card__box.css');
 @import url('../blocks/card/__title/card__title.css');
 @import url('../blocks/card/__like/card__like.css');
@@ -49,3 +51,10 @@
 @import url('../blocks/popup/__input/_data/popup__input_data_job.css');
 @import url('../blocks/popup/__button/popup__button.css');
 @import url('../blocks/popup/__close/popup__close.css');
+
+/* Блок img-popup */
+@import url('../blocks/img-popup/img-popup.css');
+@import url('../blocks/img-popup/__container/img-popup__container.css');
+@import url('../blocks/img-popup/__image/img-popup__image.css');
+@import url('../blocks/img-popup/__subline/img-popup__subline.css');
+@import url('../blocks/img-popup/__close/img-popup__close.css');
