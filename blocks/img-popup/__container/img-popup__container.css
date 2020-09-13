@@ -2,8 +2,6 @@
     display: flex;
     position: fixed;
     background-color: white;
-    background-repeat: no-repeat;
-    border-radius: 10px;
     margin: auto;
     top: 50%;
     left: 50%;

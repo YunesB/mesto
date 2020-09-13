@@ -14,10 +14,3 @@
     z-index: 3;
     color: black;
 }
-
-@media screen and (max-width: 550px) {
-    .popup__container {
-        position: fixed;
-        margin: auto 40px;
-    }
-}
