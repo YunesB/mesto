@@ -5,3 +5,7 @@
     max-height: 75vh;
     border-radius: 10px;
 }
+
+.img-popup__image:hover {
+    filter: brightness(90%);
+}
