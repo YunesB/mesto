@@ -14,3 +14,15 @@
     z-index: 3;
     color: black;
 }
+
+@media screen and (max-width: 550px) {	
+    .popup__container {	
+        max-width: 320px;	
+    }	
+}
+
+@media screen and (max-width: 425px) {	
+    .popup__container {	
+        max-width: 250px;	
+    }	
+}
