@@ -30,8 +30,8 @@ const imgPopupSrc = document.querySelector('.img-popup__image');
 const imgPopupTxt = document.querySelector('.img-popup__subline');
 
 /* for submit */
-let formElement = document.querySelector('.popup__form');
-let formElementCard = document.querySelector('.card-popup__form');
+const formElement = document.querySelector('.popup__form');
+const formElementCard = document.querySelector('.card-popup__form');
 
 const initialCards = [
     {
