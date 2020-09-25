@@ -16,7 +16,6 @@ const infoOutput = document.querySelector('.profile-info__job');
 const popupOpenCard = document.querySelector('.profile__button');
 const popupCard = document.querySelector('.card-popup');
 const popupCloseCard = document.querySelector('.card-popup__close');
-const popupBtnCard = document.querySelector('.card-popup__button');
 
 const cardList = document.querySelector('.cards');
 const formCard = document.forms.popupFormCard;
@@ -124,6 +123,9 @@ const closePopupWindow = function(evt) {
 /* Открытие / закрытие Pop-up с формой добавления карточки */
 const openPopupCard = function() {
     formCard.reset();
+    const disableBtn = formCard.querySelector('.popup__button');
+    disableBtn.disabled = true;
+    disableBtn.classList.add('popup__button_disabled');
     popupCard.classList.add('card-popup_opened');
     document.addEventListener('keydown', closePopupWindow);
 };
@@ -161,13 +163,3 @@ popupOpenCard.addEventListener('click', openPopupCard);
 popupCloseCard.addEventListener('click', closePopup);
 
 imgClose.addEventListener('click', closePopup);
-
-
-  /*
-      formSelectorCard: '.card-popup__form',
-    inputSelectorCard: '.card-popup__input',
-    submitButtonSelectorCard: '.card-popup__button',
-    inactiveButtonClassCard: 'card-popup__button_disabled',
-    inputErrorClassCard: 'card-popup__input_data_error',
-    errorClassCard: 'card-popup__error_visible'
-*/

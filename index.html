@@ -53,39 +53,40 @@
             </label>
             <label class="popup__field">
               <input minlength="2"
-               maxlength="200"
+                maxlength="200"
                 type="text" class="popup__input popup__input_data_info"
-               name="info" placeholder="О себе" required
+                name="info" placeholder="О себе" required
                 id="data-input">
               <span class="popup__error" id="data-input-error"></span>
             </label>
             <button type="submit" class="popup__button">Сохранить</button>
-          </form>
+          </fieldset>  
+        </form>
         <button class="popup__close" type="button"></button>
-      </fieldset>
       </div>
     </div>
     <div class="card-popup">
-      <div class="popup__container">
-        <h2 class="popup__heading">Новое место</h2>
+      <div class="card-popup__container">
+        <h2 class="card-popup__heading">Новое место</h2>
         <form class="popup__form" name="popupFormCard" novalidate>
           <fieldset class="popup__set">
             <label class="popup__field">
               <input 
-                minlength="2" 
+                minlength="3" 
                 maxlength="30" type="text" 
                 class="popup__input popup__input_data_name" 
-                name="place" placeholder="Название" required>
-              <span class="popup__input_type_error"></span>
+                name="place" placeholder="Название" required
+                id="place-input">
+              <span class="popup__error" id="place-input-error"></span>
             </label>
             <label class="popup__field">
               <input 
-                minlength="3"
+                minlength="2"
                 type="url" 
                 class="popup__input popup__input_data_info" 
-                name="url" placeholder="Ссылка на картинку" 
-                required>
-              <span class="popup__input_type_error"></span>
+                name="url" placeholder="Ссылка на картинку" required
+                id="url-input">
+              <span class="popup__error" id="url-input-error"></span>
             </label>
             <button type="submit" class="popup__button">Создать</button>
           </fieldset>
