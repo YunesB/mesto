@@ -36,7 +36,7 @@
     <footer class="footer">
       <p class="footer__credit">&copy; 2020 Mesto Russia</p>
     </footer>
-    <div class="popup">
+    <div class="popup" id="popupInfo">
       <div class="popup__container">
         <h2 class="popup__heading">Редактировать профиль</h2>
         <form class="popup__form" name="popupFormInfo" novalidate>
@@ -48,7 +48,8 @@
                 type="text" 
                 class="popup__input popup__input_data_name" 
                 name="name" placeholder="Имя" required
-                id="name-input">
+                id="name-input"
+                pattern="[а-яА-Я]+"> <!-- Смотрел, как работает паттерн, можно удалить -->
               <span class="popup__error" id="name-input-error"></span>
             </label>
             <label class="popup__field">
@@ -62,12 +63,12 @@
             <button type="submit" class="popup__button">Сохранить</button>
           </fieldset>  
         </form>
-        <button class="popup__close" type="button"></button>
+        <button class="popup__close" type="button" id="popupInfoClose"></button>
       </div>
     </div>
-    <div class="card-popup">
-      <div class="card-popup__container">
-        <h2 class="card-popup__heading">Новое место</h2>
+    <div class="popup" id="popupCard">
+      <div class="popup__container">
+        <h2 class="popup__heading">Новое место</h2>
         <form class="popup__form" name="popupFormCard" novalidate>
           <fieldset class="popup__set">
             <label class="popup__field">
@@ -91,7 +92,7 @@
             <button type="submit" class="popup__button">Создать</button>
           </fieldset>
         </form>
-        <button class="card-popup__close" type="button"></button>
+        <button class="popup__close" type="button" id="popupCardClose"></button>
       </div>
     </div>
     <div class="img-popup">

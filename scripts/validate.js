@@ -25,6 +25,7 @@ const setEventListeners = (formSelector) => {
   const submitButtonSelector = formSelector.querySelector('.popup__button');
   
   //toggleButtonState(inputList, submitButtonSelector);//
+  //если нужно, чтобы при первом открытии формы кнопка была неактивной//
 
   inputList.forEach((inputSelector) => {
     inputSelector.addEventListener('input', () => {
