@@ -49,7 +49,7 @@
                 class="popup__input popup__input_data_name" 
                 name="name" placeholder="Имя" required
                 id="name-input"
-                pattern="[а-яА-Я]+"> <!-- Смотрел, как работает паттерн, можно удалить -->
+                pattern="[а-яА-Я]+">
               <span class="popup__error" id="name-input-error"></span>
             </label>
             <label class="popup__field">
@@ -95,11 +95,11 @@
         <button class="popup__close" type="button" id="popupCardClose"></button>
       </div>
     </div>
-    <div class="img-popup">
-      <div class="img-popup__container">
-        <img src="" class="img-popup__image">
-        <button class="img-popup__close" type="button"></button>
-        <h3 class="img-popup__subline"></h3>
+    <div class="popup" id="popupImg">
+      <div class="popup__img-container">
+        <img src="" class="popup__image">
+        <button class="popup__close" type="button" id="popupImgClose"></button>
+        <h3 class="popup__img-subline"></h3>
       </div>
     </div>
 </div>

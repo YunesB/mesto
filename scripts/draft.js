@@ -3,10 +3,10 @@ const allSelectorClasses = {
   setSelector: '.popup__set',
   inputSelector: '.popup__input',
   submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_data_error',
-  errorClass: 'popup__error_visible'
-};
+  inactiveButtonClass: '.popup__button_disabled',
+  inputErrorClass: '.popup__input_data_error',
+  errorClass: '.popup__error_visible'
+}
 
 const showInputError = (formElement, inputElement, errorMessage, allClasses) => {
   const inputError = formElement.querySelector(`#${inputElement.id}-error`);
@@ -22,7 +22,7 @@ const hideInputError = (formElement, inputElement, allClasses) => {
   inputError.textContent = "";
 }
 
-const checkInputValidity = (formElement, inputElement, allClasses) => {
+const checkInputValidity = (formElement, inputElement) => {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, allClasses);
   } else {
@@ -32,11 +32,13 @@ const checkInputValidity = (formElement, inputElement, allClasses) => {
 
 const setEventListeners = (formElement, allClasses) => {
   const inputList = Array.from(formElement.querySelectorAll(allClasses.inputSelector));
+  console.log(allClasses.inputSelector);
   const submitButtonElement = formElement.querySelector(allClasses.submitButtonSelector);
+
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
-      checkInputValidity(formElement, inputElement, allSelectorClasses);
-      toggleButtonState(inputList, submitButtonElement, allSelectorClasses);
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, submitButtonElement);
     });
   });
 }; 
@@ -59,13 +61,15 @@ const toggleButtonState = (inputList, submitButtonElement, allClasses) => {
 
 const enableValidation = (allClasses) => {
   const formList = Array.from(document.querySelectorAll(allClasses.formSelector));
+  console.log(allClasses.formSelector);
+  console.log(allClasses.inputSelector);
   formList.forEach((formElement) => {
     formElement.addEventListener('submit', function (evt) {
       evt.preventDefault();
     });
       const fieldsetList = Array.from(formElement.querySelectorAll(allClasses.setSelector));
       fieldsetList.forEach((fieldSet) => {
-        setEventListeners(fieldSet, allClasses);
+        setEventListeners(fieldSet);
       });
   });
 };
