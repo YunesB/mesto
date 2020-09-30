@@ -38,8 +38,8 @@ const setEventListeners = (formElement, allClasses) => {
   const submitButtonElement = formElement.querySelector(allClasses.submitButtonSelector);
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
-      checkInputValidity(formElement, inputElement, allSelectorClasses);
-      toggleButtonState(inputList, submitButtonElement, allSelectorClasses);
+      checkInputValidity(formElement, inputElement, allClasses);
+      toggleButtonState(inputList, submitButtonElement, allClasses);
     });
   });
 }; 
