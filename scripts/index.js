@@ -65,7 +65,7 @@ class Card {
         this._image = data.link
     }
 
-    _getTemplate () {
+    _getTemplate() {
         const cardElement = document
         .querySelector('.card-template')
         .content
