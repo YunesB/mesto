@@ -19,9 +19,9 @@ class FormValidator {
       this._errorClass = data.errorClass
   }
 
+  /* Показ / скрытие сообщения об ошибке */
   _showInputError(form, input, errorMessage) {
     const inputError = form.querySelector(`#${input.id}-error`);
-    console.log(inputError);
     input.classList.add(this._inputErrorClass);
     inputError.textContent = errorMessage;
     inputError.classList.add(this._errorClass);
@@ -34,6 +34,7 @@ class FormValidator {
     inputError.textContent = "";
   }
 
+  /* Проверка данных на валидность */
   _checkInputValidity(form, input) {
     if (!input.validity.valid) {
       this._showInputError(form, input, input.validationMessage);
@@ -48,6 +49,7 @@ class FormValidator {
     })
   }; 
 
+  /* Переключение классов для кнопки "submit" */
   _toggleButtonState(inputList, button) {
     if (this._hasInvalidInput(inputList)) {
       button.classList.add(this._buttonClass);
@@ -58,6 +60,7 @@ class FormValidator {
     }
   };
 
+  /* Функция валидации форм */
   enableValidation = (form) => {
     form.querySelector('.popup__button').addEventListener('submit', function (evt) {
       evt.preventDefault();
@@ -66,6 +69,7 @@ class FormValidator {
     this._setEventListeners(form);
   };
 
+  /* Добавление слушателей событий на поля ввода */
   _setEventListeners(form) {
     const inputList = Array.from(form.querySelectorAll(this._input));
     const submitButtonElement = form.querySelector(this._button);
@@ -79,14 +83,12 @@ class FormValidator {
 
 }
 
-const formInfo = document.getElementById('popupFormInfo');
-const formCard = document.getElementById('popupFormCard');
-
 const validation = (data, form) => {
   const validate = new FormValidator(data);
   validate.enableValidation(form);
 };
 
+/* Вызов функции валидации форм */
 validation(allSelectorClasses, formInfo);
 validation(allSelectorClasses, formCard);
 
@@ -98,7 +100,7 @@ validation(allSelectorClasses, formCard);
 
 
 
-/* Проверка данных на валидность 
+/* 
 const showInputError = (formElement, inputElement, errorMessage, allClasses) => {
   const inputError = formElement.querySelector(`#${inputElement.id}-error`);
   inputElement.classList.add(allClasses.inputErrorClass);
@@ -113,7 +115,6 @@ const hideInputError = (formElement, inputElement, allClasses) => {
   inputError.textContent = "";
 }
 
-
 const checkInputValidity = (formElement, inputElement, allClasses) => {
   if (!inputElement.validity.valid) {
     showInputError(formElement, inputElement, inputElement.validationMessage, allClasses);
@@ -121,7 +122,6 @@ const checkInputValidity = (formElement, inputElement, allClasses) => {
     hideInputError(formElement, inputElement, allClasses);
   }
 };
-
 
 const setEventListeners = (formElement, allClasses) => {
   const inputList = Array.from(formElement.querySelectorAll(allClasses.inputSelector));
@@ -140,7 +140,6 @@ const hasInvalidInput = (inputList) => {
   })
 }; 
 
-
 const toggleButtonState = (inputList, submitButtonElement, allClasses) => {
   if (hasInvalidInput(inputList)) {
     submitButtonElement.classList.add(allClasses.inactiveButtonClass);
@@ -150,7 +149,6 @@ const toggleButtonState = (inputList, submitButtonElement, allClasses) => {
     submitButtonElement.disabled = false;
   }
 };
-
 
 const enableValidation = (allClasses) => {
   const formList = Array.from(document.querySelectorAll(allClasses.formSelector));
@@ -164,11 +162,6 @@ const enableValidation = (allClasses) => {
       });
   });
 };
-
 */
 
-/* Вызов функции валидации форм */
-/* Добавление слушателей событий на поля ввода */
-/* Функция валидации форм */
-/* Переключение классов для кнопки "submit" */
-/* Показ / скрытие сообщения об ошибке */
+
