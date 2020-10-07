@@ -50,7 +50,7 @@ export class FormValidator {
     };
   
     /* Функция валидации форм */
-    enableValidation = (form) => {
+    enableValidation(form) {
       form.querySelector('.popup__button').addEventListener('submit', function (evt) {
         evt.preventDefault();
       });
@@ -69,4 +69,4 @@ export class FormValidator {
         });
       });
     };
-  }
+}

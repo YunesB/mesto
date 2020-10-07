@@ -1,7 +1,4 @@
-import {imgPopup} from './index.js';
-import {imgPopupSrc} from './index.js';
-import {imgPopupTxt} from './index.js';
-import {openPopup} from './index.js';
+import {imgPopup, openPopup} from './index.js';
 
 export class Card {
     constructor(data) {
@@ -41,9 +38,9 @@ export class Card {
     _handleImageClick() {
         if (imgPopup.classList.contains('popup_opened') === false) {
             openPopup(imgPopup)
-            imgPopupSrc.src = this._image;
-            imgPopupSrc.alt = this._title;
-            imgPopupTxt.textContent = this._title;
+            document.querySelector('.popup__image').src = this._image;
+            document.querySelector('.popup__image').alt = this._title;
+            document.querySelector('.popup__img-subline').textContent = this._title;
         }
     }
 

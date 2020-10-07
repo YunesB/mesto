@@ -27,8 +27,6 @@ const infoInputCard = formCard.elements.url;
 
 /* Pop-up с картинкой */
 export const imgPopup = document.getElementById('popupImg');
-export const imgPopupSrc = imgPopup.querySelector('.popup__image');
-export const imgPopupTxt = imgPopup.querySelector('.popup__img-subline');
 const imgClose = document.getElementById('popupImgClose');
 
 const initialCards = [
