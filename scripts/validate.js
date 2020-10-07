@@ -1,104 +1,103 @@
-const allSelectorClasses = {
-  formSelector: '.popup__form',
-  setSelector: '.popup__set',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_data_error',
-  errorClass: 'popup__error_visible'
-};
 
-class FormValidator {
-  constructor(data) {
-      this._form = data.formSelector,
-      this._set = data.setSelector, 
-      this._input = data.inputSelector,
-      this._button = data.submitButtonSelector,
-      this._buttonClass = data.inactiveButtonClass,
-      this._inputErrorClass = data.inputErrorClass,
-      this._errorClass = data.errorClass
-  }
+/* 
+function createCard(item) {
+    const cardTemplate = document.querySelector('.card-template').content;
+    const cardElement = cardTemplate.cloneNode(true);
+    const cardImg = cardElement.querySelector('.card__image');
+    const cardTxt = cardElement.querySelector('.card__title');
+    const cardLike = cardElement.querySelector('.card__like');
+    const cardDelete = cardElement.querySelector('.card__delete-button');
 
-  /* Показ / скрытие сообщения об ошибке */
-  _showInputError(form, input, errorMessage) {
-    const inputError = form.querySelector(`#${input.id}-error`);
-    input.classList.add(this._inputErrorClass);
-    inputError.textContent = errorMessage;
-    inputError.classList.add(this._errorClass);
-  }
+    cardImg.src = item.link;
+    cardImg.alt = item.name;
+    cardTxt.textContent = item.name;
 
-  _hideInputError(form, input) {
-    const inputError = form.querySelector(`#${input.id}-error`);
-    input.classList.remove(this._inputErrorClass);
-    inputError.classList.remove(this._errorClass);
-    inputError.textContent = "";
-  }
-
-  /* Проверка данных на валидность */
-  _checkInputValidity(form, input) {
-    if (!input.validity.valid) {
-      this._showInputError(form, input, input.validationMessage);
-    } else {
-      this._hideInputError(form, input);
-    }
-  };
-
-  _hasInvalidInput(inputList) {
-    return inputList.some((input) => {
-      return !input.validity.valid;
-    })
-  }; 
-
-  /* Переключение классов для кнопки "submit" */
-  _toggleButtonState(inputList, button) {
-    if (this._hasInvalidInput(inputList)) {
-      button.classList.add(this._buttonClass);
-      button.disabled = true;
-    } else {
-      button.classList.remove(this._buttonClass);
-      button.disabled = false;
-    }
-  };
-
-  /* Функция валидации форм */
-  enableValidation = (form) => {
-    form.querySelector('.popup__button').addEventListener('submit', function (evt) {
-      evt.preventDefault();
+    cardImg.addEventListener('click', function() {
+        if (imgPopup.classList.contains('popup_opened') === false) {
+            openPopup(imgPopup)
+            imgPopupSrc.src = cardImg.src;
+            imgPopupSrc.alt = cardImg.alt;
+            imgPopupTxt.textContent = cardImg.alt;
+        }
     });
 
-    this._setEventListeners(form);
-  };
-
-  /* Добавление слушателей событий на поля ввода */
-  _setEventListeners(form) {
-    const inputList = Array.from(form.querySelectorAll(this._input));
-    const submitButtonElement = form.querySelector(this._button);
-    inputList.forEach((input) => {
-      input.addEventListener('input', () => {
-        this._checkInputValidity(form, input);
-        this._toggleButtonState(inputList, submitButtonElement);
-      });
+    cardLike.addEventListener('click', function() {
+        cardLike.classList.toggle('card__like_state_posted');
     });
-  };
 
+    cardDelete.addEventListener('click', function() {
+        const listItem = cardDelete.closest('.card');
+        listItem.remove();
+    });
+    return cardElement;
+}; 
+
+
+class Card {
+  constructor(title, description, price, image) {
+    this._title = title,
+    this._description = description, 
+    this._price = price, 
+    this._image = image
+  }
+  
+  _getTemplate() {
+      const cardElement = document
+      .querySelector('.horizontal-card')
+      .content
+      .querySelector('.card')
+      .cloneNode(true);
+      return cardElement;
+  }
+
+  generateCard() {
+  // Запишем разметку в приватное поле _element. 
+  // Так у других элементов появится доступ к ней.
+    this._element = this._getTemplate();
+    this._setEventListeners();
+
+  // Добавим данные
+    this._element.querySelector('.card__avatar').src = this._image;
+    this._element.querySelector('.card__paragraph').textContent = this._text;
+
+  // Вернём элемент наружу
+    return this._element;
+  }
+
+  _handleMessageClick() {
+    this._element.querySelector('.card__text').classList.toggle('card__text_is-active');
+  }
+
+  _setEventListeners() {
+  this._element.querySelector('.card__text').addEventListener('click', () => {
+    this._handleMessageClick();
+  });
+
+  messageList.forEach((item) => {
+    // Создадим экземпляр карточки
+    const card = new Card(item.text, item.image);
+    // Создаём карточку и возвращаем наружу
+    const cardElement = card.generateCard();
+
+    // Добавляем в DOM
+    document.body.append(cardElement);
+  });
 }
 
-const validation = (data, form) => {
-  const validate = new FormValidator(data);
-  validate.enableValidation(form);
+
+
+
+function renderCard(cardList, cardElement) {
+    cardList.prepend(cardElement);
 };
 
-/* Вызов функции валидации форм */
-validation(allSelectorClasses, formInfo);
-validation(allSelectorClasses, formCard);
+ReversedCards.forEach((item) => {
+    const cardElement = createCard(item);
+    renderCard(cardList, cardElement);
+}); 
 
 
-
-
-
-
-
-
+*/
 
 /* 
 const showInputError = (formElement, inputElement, errorMessage, allClasses) => {

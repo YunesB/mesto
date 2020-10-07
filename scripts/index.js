@@ -1,3 +1,7 @@
+import {Card} from './Card.js';
+import {FormValidator} from './FormValidator.js';
+
+
 /* variables */
 /* Pop-up для добавления информации о себе */
 const popupList = document.querySelectorAll('.popup')
@@ -22,10 +26,10 @@ const nameInputCard = formCard.elements.place;
 const infoInputCard = formCard.elements.url;
 
 /* Pop-up с картинкой */
-const imgPopup = document.getElementById('popupImg');
+export const imgPopup = document.getElementById('popupImg');
+export const imgPopupSrc = imgPopup.querySelector('.popup__image');
+export const imgPopupTxt = imgPopup.querySelector('.popup__img-subline');
 const imgClose = document.getElementById('popupImgClose');
-const imgPopupSrc = imgPopup.querySelector('.popup__image');
-const imgPopupTxt = imgPopup.querySelector('.popup__img-subline');
 
 const initialCards = [
     {
@@ -56,66 +60,18 @@ const initialCards = [
 
 const reversedCards = initialCards.reverse();
 
+const allSelectorClasses = {
+    formSelector: '.popup__form',
+    inputSelector: '.popup__input',
+    submitButtonSelector: '.popup__button',
+    inactiveButtonClass: 'popup__button_disabled',
+    inputErrorClass: 'popup__input_data_error',
+    errorClass: 'popup__error_visible'
+};
+
+
 /* functions */
 /* Общие функции для карточек */
-
-class Card {
-    constructor(data) {
-        this._title = data.name,
-        this._image = data.link
-    }
-
-    _getTemplate() {
-        const cardElement = document
-        .querySelector('.card-template')
-        .content
-        .querySelector('.card')
-        .cloneNode(true);
-        return cardElement;
-    }
-
-    generateCard() {
-        this._element = this._getTemplate();
-        this._setEventListeners();
-        this._element.querySelector('.card__title').textContent = this._title;
-        const cardImg = this._element.querySelector('.card__image');
-        cardImg.src = this._image;
-        cardImg.alt = this._title;
-
-        return this._element;
-    }
-
-    _handleLikeClick() {
-        this._element.querySelector('.card__like').classList.toggle('card__like_state_posted');
-    }
-
-    _handleDltClick() {
-        const listItem = this._element.querySelector('.card__delete-button').closest('.card');
-        listItem.remove();
-    }
-
-    _handleImageClick() {
-        if (imgPopup.classList.contains('popup_opened') === false) {
-            openPopup(imgPopup)
-            imgPopupSrc.src = this._image;
-            imgPopupSrc.alt = this._title;
-            imgPopupTxt.textContent = this._title;
-        }
-    }
-
-    _setEventListeners() {
-        this._element.querySelector('.card__like').addEventListener('click', () => {
-            this._handleLikeClick();
-        });
-        this._element.querySelector('.card__delete-button').addEventListener('click', () => {
-            this._handleDltClick();
-        });
-        this._element.querySelector('.card__image').addEventListener('click', () => {
-            this._handleImageClick();
-        });
-    }
-}
-
 reversedCards.forEach((item) => {
     const card = new Card(item);
     const cardElement = card.generateCard();
@@ -123,7 +79,7 @@ reversedCards.forEach((item) => {
 });
 
 /* Общие функции для Pop-up */
-function openPopup(popup) {
+export function openPopup(popup) {
     popup.classList.add('popup_opened');
     popup.addEventListener('click', handlePopupClosing)
     document.addEventListener('keydown', handlePopupClosingEsc);
@@ -204,6 +160,17 @@ function handleFormSubmitCard (evt) {
     closePopup(popupCard);
 };
 
+/* Общая функция валидации форм */
+const validation = (data, form) => {
+    const validate = new FormValidator(data);
+    validate.enableValidation(form);
+};
+
+/* Вызов функции валидации форм */
+validation(allSelectorClasses, formInfo);
+validation(allSelectorClasses, formCard);
+
+
 /* event listeners */
 formInfo.addEventListener('submit', handleFormSubmit);
 formCard.addEventListener('submit', handleFormSubmitCard);
@@ -215,106 +182,3 @@ popupOpenCard.addEventListener('click', openPopupCard);
 popupCloseCard.addEventListener('click', function () {closePopup(popupCard)});
 
 imgClose.addEventListener('click', function () {closePopup(imgPopup)});
-
-
-
-
-/* 
-function createCard(item) {
-    const cardTemplate = document.querySelector('.card-template').content;
-    const cardElement = cardTemplate.cloneNode(true);
-    const cardImg = cardElement.querySelector('.card__image');
-    const cardTxt = cardElement.querySelector('.card__title');
-    const cardLike = cardElement.querySelector('.card__like');
-    const cardDelete = cardElement.querySelector('.card__delete-button');
-
-    cardImg.src = item.link;
-    cardImg.alt = item.name;
-    cardTxt.textContent = item.name;
-
-    cardImg.addEventListener('click', function() {
-        if (imgPopup.classList.contains('popup_opened') === false) {
-            openPopup(imgPopup)
-            imgPopupSrc.src = cardImg.src;
-            imgPopupSrc.alt = cardImg.alt;
-            imgPopupTxt.textContent = cardImg.alt;
-        }
-    });
-
-    cardLike.addEventListener('click', function() {
-        cardLike.classList.toggle('card__like_state_posted');
-    });
-
-    cardDelete.addEventListener('click', function() {
-        const listItem = cardDelete.closest('.card');
-        listItem.remove();
-    });
-    return cardElement;
-}; 
-
-
-class Card {
-  constructor(title, description, price, image) {
-    this._title = title,
-    this._description = description, 
-    this._price = price, 
-    this._image = image
-  }
-  
-  _getTemplate() {
-      const cardElement = document
-      .querySelector('.horizontal-card')
-      .content
-      .querySelector('.card')
-      .cloneNode(true);
-      return cardElement;
-  }
-
-  generateCard() {
-  // Запишем разметку в приватное поле _element. 
-  // Так у других элементов появится доступ к ней.
-    this._element = this._getTemplate();
-    this._setEventListeners();
-
-  // Добавим данные
-    this._element.querySelector('.card__avatar').src = this._image;
-    this._element.querySelector('.card__paragraph').textContent = this._text;
-
-  // Вернём элемент наружу
-    return this._element;
-  }
-
-  _handleMessageClick() {
-    this._element.querySelector('.card__text').classList.toggle('card__text_is-active');
-  }
-
-  _setEventListeners() {
-  this._element.querySelector('.card__text').addEventListener('click', () => {
-    this._handleMessageClick();
-  });
-
-  messageList.forEach((item) => {
-    // Создадим экземпляр карточки
-    const card = new Card(item.text, item.image);
-    // Создаём карточку и возвращаем наружу
-    const cardElement = card.generateCard();
-
-    // Добавляем в DOM
-    document.body.append(cardElement);
-  });
-}
-
-
-
-
-function renderCard(cardList, cardElement) {
-    cardList.prepend(cardElement);
-};
-
-ReversedCards.forEach((item) => {
-    const cardElement = createCard(item);
-    renderCard(cardList, cardElement);
-}); 
-
-
-*/
