@@ -28,7 +28,6 @@ const infoInputCard = formCard.elements.url;
 /* Pop-up с картинкой */
 export const imgPopup = document.getElementById('popupImg');
 const imgClose = document.getElementById('popupImgClose');
-const cardTemplate = document.querySelector('.card-template')
 
 const initialCards = [
     {
@@ -78,7 +77,7 @@ const renderCard = function(cardItem, template) {
 };
 
 reversedCards.forEach((item) => {
-    renderCard(item, cardTemplate);
+    renderCard(item, ".card-template");
 });
 
 /* Общие функции для Pop-up */
@@ -162,7 +161,7 @@ function handleFormSubmit (evt) {
 function handleFormSubmitCard (evt) {
     evt.preventDefault();
     const cardItem = ({name: nameInputCard.value, link: infoInputCard.value});
-    renderCard(cardItem, cardTemplate);
+    renderCard(cardItem, ".card-template");
     closePopup(popupCard);
 };
 
