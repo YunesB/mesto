@@ -28,6 +28,7 @@ const infoInputCard = formCard.elements.url;
 /* Pop-up с картинкой */
 export const imgPopup = document.getElementById('popupImg');
 const imgClose = document.getElementById('popupImgClose');
+const cardTemplate = document.querySelector('.card-template')
 
 const initialCards = [
     {
@@ -70,22 +71,26 @@ const allSelectorClasses = {
 
 /* functions */
 /* Общие функции для карточек */
-reversedCards.forEach((item) => {
-    const card = new Card(item);
+const renderCard = function(cardItem, template) {
+    const card = new Card(cardItem, template);
     const cardElement = card.generateCard();
     cardList.prepend(cardElement);
+};
+
+reversedCards.forEach((item) => {
+    renderCard(item, cardTemplate);
 });
 
 /* Общие функции для Pop-up */
 export function openPopup(popup) {
     popup.classList.add('popup_opened');
     popup.addEventListener('click', handlePopupClosing)
-    document.addEventListener('keydown', handlePopupClosingEsc);
+    document.addEventListener('keyup', handlePopupClosingEsc);
 };
 
 function closePopup(popup) {
     popup.removeEventListener('click', handlePopupClosing)
-    document.removeEventListener('keydown', handlePopupClosingEsc);
+    document.removeEventListener('keyup', handlePopupClosingEsc);
     popup.classList.remove('popup_opened');
 }; 
 
@@ -102,12 +107,9 @@ function handlePopupClosing (evt) {
 
 function handlePopupClosingEsc (evt) {
     if (evt.key === "Escape") {
-        popupList.forEach((popup) => {
-            if (popup.classList.contains('popup_opened')) {
-                closePopup(popup);
-            }
-        });
-    };
+        const popupActive = document.querySelector('.popup_opened');
+        closePopup(popupActive);
+    }; // все гениальное - просто. Спасибо :) //
 };
 
 /* Открытие Pop-up с формой добавления карточки */
@@ -119,8 +121,7 @@ const openPopupCard = function() {
 
     formCard.reset();
     const disableBtn = formCard.querySelector('.popup__button');
-    disableBtn.disabled = true;
-    disableBtn.classList.add('popup__button_disabled');
+    disableSubmitButton(disableBtn, allSelectorClasses.inactiveButtonClass);
     openPopup(popupCard)
 };
 
@@ -133,12 +134,21 @@ const openPopupInfo = function() {
     removeError(inputErrorData, infoInput);
 
     const infoSubmit = document.getElementById('infoSubmit');
-    infoSubmit.classList.remove('popup__button_disabled');
-    infoSubmit.disabled = false;
+    enableSubmitButton(infoSubmit, allSelectorClasses.inactiveButtonClass);
 
     nameInput.value = nameOutput.textContent;
     infoInput.value = infoOutput.textContent;
     openPopup(popupInfo);
+};
+
+export const enableSubmitButton = function (button, selector) {
+    button.classList.remove(selector);
+    button.disabled = false;
+};
+
+export const disableSubmitButton = function (button, selector) {
+    button.classList.add(selector);
+    button.disabled = true;
 };
 
 /* Действия по нажатию на submit в формах */
@@ -152,9 +162,7 @@ function handleFormSubmit (evt) {
 function handleFormSubmitCard (evt) {
     evt.preventDefault();
     const cardItem = ({name: nameInputCard.value, link: infoInputCard.value});
-    const card = new Card(cardItem);
-    const cardElement = card.generateCard();
-    cardList.prepend(cardElement);
+    renderCard(cardItem, cardTemplate);
     closePopup(popupCard);
 };
 

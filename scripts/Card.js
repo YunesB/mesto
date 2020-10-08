@@ -1,14 +1,14 @@
 import {imgPopup, openPopup} from './index.js';
 
 export class Card {
-    constructor(data) {
+    constructor(data, template) {
         this._title = data.name,
-        this._image = data.link
+        this._image = data.link,
+        this._card = template
     }
 
     _getTemplate() {
-        const cardElement = document
-        .querySelector('.card-template')
+        const cardElement = this._card
         .content
         .querySelector('.card')
         .cloneNode(true);
@@ -38,8 +38,9 @@ export class Card {
     _handleImageClick() {
         if (imgPopup.classList.contains('popup_opened') === false) {
             openPopup(imgPopup)
-            document.querySelector('.popup__image').src = this._image;
-            document.querySelector('.popup__image').alt = this._title;
+            const imageSelector = document.querySelector('.popup__image');
+            imageSelector.src = this._image;
+            imageSelector.alt = this._title;
             document.querySelector('.popup__img-subline').textContent = this._title;
         }
     }

@@ -1,3 +1,5 @@
+import {disableSubmitButton, enableSubmitButton} from './index.js';
+
 export class FormValidator {
     constructor(data) {
         this._form = data.formSelector,
@@ -41,11 +43,9 @@ export class FormValidator {
     /* Переключение классов для кнопки "submit" */
     _toggleButtonState(inputList, button) {
       if (this._hasInvalidInput(inputList)) {
-        button.classList.add(this._buttonClass);
-        button.disabled = true;
+        disableSubmitButton(button, this._buttonClass);
       } else {
-        button.classList.remove(this._buttonClass);
-        button.disabled = false;
+        enableSubmitButton(button, this._buttonClass);
       }
     };
   
