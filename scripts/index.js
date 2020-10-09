@@ -4,7 +4,6 @@ import {FormValidator} from './FormValidator.js';
 
 /* variables */
 /* Pop-up для добавления информации о себе */
-const popupList = document.querySelectorAll('.popup')
 const popupInfo = document.getElementById('popupInfo');
 const popupOpen = document.querySelector('.profile-info__customization');
 const popupClose = document.getElementById('popupInfoClose');
