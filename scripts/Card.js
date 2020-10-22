@@ -1,9 +1,8 @@
-import {imgPopup, openPopup} from './index.js';
-
 export class Card {
-    constructor(data, template) {
-        this._title = data.name,
-        this._image = data.link,
+    constructor({data: {link, name}, externalHandler}, template) {
+        this._title = name,
+        this._image = link,
+        this.externalHandler = externalHandler,
         this._card = template
     }
 
@@ -36,13 +35,7 @@ export class Card {
     }
 
     _handleImageClick() {
-        if (imgPopup.classList.contains('popup_opened') === false) {
-            openPopup(imgPopup)
-            const imageSelector = document.querySelector('.popup__image');
-            imageSelector.src = this._image;
-            imageSelector.alt = this._title;
-            document.querySelector('.popup__img-subline').textContent = this._title;
-        }
+       this.externalHandler(this._image, this._title);
     }
 
     _setEventListeners() {
