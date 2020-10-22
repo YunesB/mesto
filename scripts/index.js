@@ -24,7 +24,6 @@ const popupCard = document.getElementById('popupCard');
 const popupOpenCard = document.querySelector('.profile__button');
 const popupCloseCard = document.getElementById('popupCardClose');
 
-const cardList = document.querySelector('.cards');
 const formCard = document.forms.popupFormCard;
 const nameInputCard = formCard.elements.place;
 const infoInputCard = formCard.elements.url;
@@ -76,7 +75,22 @@ const openUser = new Popup('popupInfo');
 
 /* functions */
 /* Общие функции для карточек */
+const cardsList = new Section({
+    data: reversedCards,
+    renderer: (data) => {
+        const card = new Card({
+            data,
+            externalHandler: (img, title) => openImage.open(img, title)}, 
+            ".card-template");
+        const cardElement = card.generateCard();
+        cardsList.addItem(cardElement);
+      },
+    },
+'.cards');
 
+cardsList.renderItems()
+
+/*
 const renderCard = function(data, template) {
     const card = new Card(data, template);
     const cardElement = card.generateCard();
@@ -88,7 +102,7 @@ reversedCards.forEach((data) => {
         data,
         externalHandler: (img, title) => openImage.open(img, title)}, 
         ".card-template");
-});
+}); */
 
 /* Общие функции для Pop-up */
 export function openPopup(popup) {
