@@ -1,10 +1,14 @@
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
+import {Popup} from './Popup.js';
+import {PopupWithImage} from './PopupWithImage.js';
+/*import {PopupwithForm} from './PopupwithForm.js';
+ import {UserInfo} from './UserInfo.js'; */
+import {Section} from './Section.js';
 
 
 /* variables */
 /* Pop-up для добавления информации о себе */
-const popupList = document.querySelectorAll('.popup')
 const popupInfo = document.getElementById('popupInfo');
 const popupOpen = document.querySelector('.profile-info__customization');
 const popupClose = document.getElementById('popupInfoClose');
@@ -67,48 +71,38 @@ const allSelectorClasses = {
     errorClass: 'popup__error_visible'
 };
 
+const openImage = new PopupWithImage('popupImg');
+const openUser = new Popup('popupInfo');
 
 /* functions */
 /* Общие функции для карточек */
-const renderCard = function(cardItem, template) {
-    const card = new Card(cardItem, template);
+
+const renderCard = function(data, template) {
+    const card = new Card(data, template);
     const cardElement = card.generateCard();
     cardList.prepend(cardElement);
 };
 
-reversedCards.forEach((item) => {
-    renderCard(item, ".card-template");
+reversedCards.forEach((data) => {
+    renderCard({
+        data,
+        externalHandler: (img, title) => openImage.open(img, title)}, 
+        ".card-template");
 });
 
 /* Общие функции для Pop-up */
 export function openPopup(popup) {
-    popup.classList.add('popup_opened');
-    popup.addEventListener('click', handlePopupClosing)
-    document.addEventListener('keyup', handlePopupClosingEsc);
+    popup.open();
+    popup.setEventListeners();
 };
 
 function closePopup(popup) {
-    popup.removeEventListener('click', handlePopupClosing)
-    document.removeEventListener('keyup', handlePopupClosingEsc);
-    popup.classList.remove('popup_opened');
+    popup.close();
 }; 
 
 function removeError(input, output) {
     input.textContent ='';
     output.classList.remove('popup__input_data_error');
-};
-
-function handlePopupClosing (evt) {
-    if (!evt.target.closest('.popup__container' || '.popup__img-container')) {
-        closePopup(evt.target);
-    }
-};
-
-function handlePopupClosingEsc (evt) {
-    if (evt.key === "Escape") {
-        const popupActive = document.querySelector('.popup_opened');
-        closePopup(popupActive);
-    }; // все гениальное - просто. Спасибо :) //
 };
 
 /* Открытие Pop-up с формой добавления карточки */
@@ -161,7 +155,7 @@ function handleFormSubmit (evt) {
 function handleFormSubmitCard (evt) {
     evt.preventDefault();
     const cardItem = ({name: nameInputCard.value, link: infoInputCard.value});
-    renderCard(cardItem, ".card-template");
+    renderCard({data: cardItem, handleImageClick: externalHandler()}, ".card-template");
     closePopup(popupCard);
 };
 
@@ -180,10 +174,10 @@ validation(allSelectorClasses, formCard);
 formInfo.addEventListener('submit', handleFormSubmit);
 formCard.addEventListener('submit', handleFormSubmitCard);
 
-popupOpen.addEventListener('click', openPopupInfo);
-popupClose.addEventListener('click', function () {closePopup(popupInfo)});
+popupOpen.addEventListener('click', function () {openPopup(openUser)});
+popupClose.addEventListener('click', function () {closePopup(openUser)});
 
 popupOpenCard.addEventListener('click', openPopupCard);
 popupCloseCard.addEventListener('click', function () {closePopup(popupCard)});
 
-imgClose.addEventListener('click', function () {closePopup(imgPopup)});
+imgClose.addEventListener('click', function () {closePopup(openImage)});
