@@ -19,8 +19,8 @@ export class Popup {
     }
 
     setEventListeners() {
-        this._popup.addEventListener('click', () => {
-            if (!this._popup.closest('.popup__container' || '.popup__img-container')) {
+        this._popup.addEventListener('click', (evt) => {
+            if (!evt.target.closest('.popup__container') && !evt.target.closest('.popup__img-container')) {
                 this.close();
             }
         });

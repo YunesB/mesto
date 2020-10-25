@@ -1,9 +1,8 @@
 import {Card} from './Card.js';
 import {FormValidator} from './FormValidator.js';
-import {Popup} from './Popup.js';
 import {PopupWithImage} from './PopupWithImage.js';
-/*import {PopupwithForm} from './PopupwithForm.js';
- import {UserInfo} from './UserInfo.js'; */
+import {PopupWithForm} from './PopupWithForm.js';
+import {UserInfo} from './UserInfo.js';
 import {Section} from './Section.js';
 
 
@@ -16,11 +15,8 @@ const popupClose = document.getElementById('popupInfoClose');
 const formInfo = document.forms.popupFormInfo;
 const nameInput = formInfo.elements.name;
 const infoInput = formInfo.elements.info;
-const nameOutput = document.querySelector('.profile-info__name');
-const infoOutput = document.querySelector('.profile-info__job');
 
 /* Pop-up для добавления карточки */
-const popupCard = document.getElementById('popupCard');
 const popupOpenCard = document.querySelector('.profile__button');
 const popupCloseCard = document.getElementById('popupCardClose');
 
@@ -70,9 +66,6 @@ const allSelectorClasses = {
     errorClass: 'popup__error_visible'
 };
 
-const openImage = new PopupWithImage('popupImg');
-const openUser = new Popup('popupInfo');
-
 /* functions */
 /* Общие функции для карточек */
 const cardsList = new Section({
@@ -90,20 +83,6 @@ const cardsList = new Section({
 
 cardsList.renderItems()
 
-/*
-const renderCard = function(data, template) {
-    const card = new Card(data, template);
-    const cardElement = card.generateCard();
-    cardList.prepend(cardElement);
-};
-
-reversedCards.forEach((data) => {
-    renderCard({
-        data,
-        externalHandler: (img, title) => openImage.open(img, title)}, 
-        ".card-template");
-}); */
-
 /* Общие функции для Pop-up */
 export function openPopup(popup) {
     popup.open();
@@ -120,19 +99,95 @@ function removeError(input, output) {
 };
 
 /* Открытие Pop-up с формой добавления карточки */
-const openPopupCard = function() {
+
+
+/* Открытие Pop-up с формой редактирования профиля */
+const submitPopupInfo = () => {
+    const infoSubmit = document.getElementById('infoSubmit');
+    enableSubmitButton(infoSubmit, allSelectorClasses.inactiveButtonClass);
+    nameInput.value = nameOutput.textContent;
+    infoInput.value = infoOutput.textContent;
+}
+
+export const enableSubmitButton = function (button, selector) {
+    button.classList.remove(selector);
+    button.disabled = false;
+};
+
+export const disableSubmitButton = function (button, selector) {
+    button.classList.add(selector);
+    button.disabled = true;
+};
+
+/* Действия по нажатию на submit в формах */
+function handleFormSubmit (data) {
+    infoUser.setUserInfo(data);
+    openInfo.close();
+};
+    
+function handleFormSubmitCard () {
+    const card = new Card({
+        data: {name: nameInputCard.value, link: infoInputCard.value},
+        externalHandler: (img, title) => openImage.open(img, title)}, 
+        ".card-template");
+    const cardElement = card.generateCard();
+    cardsList.addItem(cardElement);
+    openCard.close();
+};
+
+/* Общая функция валидации форм */
+const validation = (data, form) => {
+    const validate = new FormValidator(data);
+    validate.enableValidation(form);
+};
+
+/* Вызов функции валидации форм */
+validation(allSelectorClasses, formInfo);
+validation(allSelectorClasses, formCard);
+
+
+/* event listeners */
+
+
+popupOpen.addEventListener('click', function () {
+    openPopup(openInfo, submitPopupInfo);
+    const inputErrorName = document.getElementById(`name-input-error`);
+    const inputErrorData = document.getElementById(`data-input-error`);
+    removeError(inputErrorName, nameInput);
+    removeError(inputErrorData, infoInput);
+    const userData = infoUser.getUserInfo();
+    nameInput.value = userData.name;
+    infoInput.value = userData.info;
+});
+popupClose.addEventListener('click', function () {closePopup(openInfo)});
+
+popupOpenCard.addEventListener('click', function () {
     const inputErrorPlace = document.getElementById(`place-input-error`);
     const inputErrorUrl = document.getElementById(`url-input-error`);
     removeError(inputErrorPlace, nameInputCard);
     removeError(inputErrorUrl, infoInputCard);
 
-    formCard.reset();
     const disableBtn = formCard.querySelector('.popup__button');
     disableSubmitButton(disableBtn, allSelectorClasses.inactiveButtonClass);
-    openPopup(popupCard)
-};
 
-/* Открытие Pop-up с формой редактирования профиля */
+    openPopup(openCard);
+});
+popupCloseCard.addEventListener('click', function () {closePopup(openCard)});
+
+imgClose.addEventListener('click', function () {closePopup(openImage)});
+
+
+const openImage = new PopupWithImage('popupImg');
+const openInfo = new PopupWithForm('popupInfo', handleFormSubmit);
+const openCard = new PopupWithForm('popupCard', handleFormSubmitCard);
+const infoUser = new UserInfo({
+    name: '.profile-info__name',
+    info: '.profile-info__job'
+});
+
+
+
+/*
 const openPopupInfo = function() {
     formInfo.reset();
     const inputErrorName = document.getElementById(`name-input-error`);
@@ -148,50 +203,19 @@ const openPopupInfo = function() {
     openPopup(popupInfo);
 };
 
-export const enableSubmitButton = function (button, selector) {
-    button.classList.remove(selector);
-    button.disabled = false;
+const openPopupCard = function() {
+    const inputErrorPlace = document.getElementById(`place-input-error`);
+    const inputErrorUrl = document.getElementById(`url-input-error`);
+    removeError(inputErrorPlace, nameInputCard);
+    removeError(inputErrorUrl, infoInputCard);
+
+    formCard.reset();
+    const disableBtn = formCard.querySelector('.popup__button');
+    disableSubmitButton(disableBtn, allSelectorClasses.inactiveButtonClass);
+    openPopup(popupCard)
 };
 
-export const disableSubmitButton = function (button, selector) {
-    button.classList.add(selector);
-    button.disabled = true;
-};
-
-/* Действия по нажатию на submit в формах */
-function handleFormSubmit (evt) {
-    evt.preventDefault();
-    nameOutput.textContent = nameInput.value;
-    infoOutput.textContent = infoInput.value;
-    closePopup(popupInfo);
-};
-    
-function handleFormSubmitCard (evt) {
-    evt.preventDefault();
-    const cardItem = ({name: nameInputCard.value, link: infoInputCard.value});
-    renderCard({data: cardItem, handleImageClick: externalHandler()}, ".card-template");
-    closePopup(popupCard);
-};
-
-/* Общая функция валидации форм */
-const validation = (data, form) => {
-    const validate = new FormValidator(data);
-    validate.enableValidation(form);
-};
-
-/* Вызов функции валидации форм */
-validation(allSelectorClasses, formInfo);
-validation(allSelectorClasses, formCard);
-
-
-/* event listeners */
+const popupCard = document.getElementById('popupCard');
 formInfo.addEventListener('submit', handleFormSubmit);
 formCard.addEventListener('submit', handleFormSubmitCard);
-
-popupOpen.addEventListener('click', function () {openPopup(openUser)});
-popupClose.addEventListener('click', function () {closePopup(openUser)});
-
-popupOpenCard.addEventListener('click', openPopupCard);
-popupCloseCard.addEventListener('click', function () {closePopup(popupCard)});
-
-imgClose.addEventListener('click', function () {closePopup(openImage)});
+*/
