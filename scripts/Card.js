@@ -1,5 +1,5 @@
 export class Card {
-    constructor({data: {link, name}, externalHandler}, template) {
+    constructor({data: {name, link}, externalHandler}, template) {
         this._title = name,
         this._image = link,
         this.externalHandler = externalHandler,

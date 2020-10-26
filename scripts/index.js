@@ -9,6 +9,7 @@ import {reversedCards, allSelectorClasses} from '../utils/constants.js';
 
 /* variables */
 const popupInfo = new PopupWithForm('popupInfo', handleFormSubmit);
+popupInfo.setEventListeners();
 const popupOpen = document.querySelector('.profile-info__customization');
 const popupClose = document.getElementById('popupInfoClose');
 
@@ -16,13 +17,19 @@ const formInfo = document.forms.popupFormInfo;
 const nameInput = formInfo.elements.name;
 const infoInput = formInfo.elements.info;
 
-const popupCard = new PopupWithForm('popupCard', handleFormSubmitCard);
+
+const popupCard = new PopupWithForm('popupCard', (data) => {
+    cardsList.renderCard(data);
+    popupCard.close(); 
+});
+popupCard.setEventListeners();
+
 const popupOpenCard = document.querySelector('.profile__button');
 const popupCloseCard = document.getElementById('popupCardClose');
 
 const formCard = document.forms.popupFormCard;
-const nameInputCard = formCard.elements.place;
-const infoInputCard = formCard.elements.url;
+const nameInputCard = formCard.elements.name;
+const infoInputCard = formCard.elements.link;
 
 const infoUser = new UserInfo({
     name: '.profile-info__name',
@@ -51,15 +58,6 @@ const cardsList = new Section({
 cardsList.renderItems()
 
 /* Общие функции для Pop-up */
-export function openPopup(popup) {
-    popup.open();
-    popup.setEventListeners();
-};
-
-function closePopup(popup) {
-    popup.close();
-}; 
-
 function removeError(input, output) {
     input.textContent ='';
     output.classList.remove('popup__input_data_error');
@@ -97,19 +95,6 @@ function handleFormSubmit (data) {
     infoUser.setUserInfo(data);
     popupInfo.close();
 };
-    
-function handleFormSubmitCard () {
-    const card = new Card({
-        data: {
-            name: nameInputCard.value, 
-            link: infoInputCard.value
-        },
-        externalHandler: (img, title) => popupImage.open(img, title)}, 
-        ".card-template");
-    const cardElement = card.generateCard();
-    cardsList.addItem(cardElement);
-    popupCard.close();
-};
 
 /* Вызов функции валидации форм */
 validation(allSelectorClasses, formInfo);
@@ -131,9 +116,9 @@ popupOpen.addEventListener('click', function () {
     const submitBtn = formInfo.querySelector('.popup__button');
     enableSubmitButton(submitBtn, allSelectorClasses.inactiveButtonClass);
 
-    openPopup(popupInfo);
-
+    popupInfo.open();
 });
+
 popupClose.addEventListener('click', function () {closePopup(popupInfo)});
 
 popupOpenCard.addEventListener('click', function () {
@@ -150,8 +135,9 @@ popupOpenCard.addEventListener('click', function () {
     const submitBtn = formCard.querySelector('.popup__button');
     disableSubmitButton(submitBtn, allSelectorClasses.inactiveButtonClass);
 
-    openPopup(popupCard);
+    popupCard.open();
 });
+
 popupCloseCard.addEventListener('click', function () {closePopup(popupCard)});
 
 imgClose.addEventListener('click', function () {closePopup(popupImage)});

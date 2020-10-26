@@ -6,11 +6,11 @@ export class PopupWithImage extends Popup {
     }
 
     open(image, title) {
-        super.open();
         const imageSelector = this._popup.querySelector('.popup__image');
         imageSelector.src = image;
         imageSelector.alt = title;
         this._popup.querySelector('.popup__img-subline').textContent = title;
         this.setEventListeners();
+        super.open();
     }
 }
