@@ -34,6 +34,9 @@ const validation = (data, form) => {
     validate.enableValidation(form);
 };
 
+validation(allSelectorClasses, formInfo);
+validation(allSelectorClasses, formCard);
+
 /* Загрузка начальных карточек */
 const cardsList = new Section({
     data: reversedCards,
@@ -85,10 +88,6 @@ function handleFormSubmit (data) {
     infoUser.setUserInfo(data);
     popupInfo.close();
 };
-
-/* Вызов функции валидации форм */
-validation(allSelectorClasses, formInfo);
-validation(allSelectorClasses, formCard);
 
 
 /* event listeners */

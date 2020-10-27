@@ -7,8 +7,8 @@ export class PopupWithForm extends Popup {
     }
 
     open() {
-        super.open();
         super.setEventListeners();
+        super.open();
     }
 
     setEventListeners() {
@@ -27,7 +27,7 @@ export class PopupWithForm extends Popup {
     }
 
     close() {
-        super.close();
         this._popup.querySelector('.popup__form').reset();
+        super.close();
     }
 }
