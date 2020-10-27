@@ -1,22 +1,20 @@
-import {Card} from './Card.js';
-import {FormValidator} from './FormValidator.js';
-import {PopupWithImage} from './PopupWithImage.js';
-import {PopupWithForm} from './PopupWithForm.js';
-import {UserInfo} from './UserInfo.js';
-import {Section} from './Section.js';
+import {Card} from '../components/Card.js';
+import {FormValidator} from '../components/FormValidator.js';
+import {PopupWithImage} from '../components/PopupWithImage.js';
+import {PopupWithForm} from '../components/PopupWithForm.js';
+import {UserInfo} from '../components/UserInfo.js';
+import {Section} from '../components/Section.js';
 import {reversedCards, allSelectorClasses} from '../utils/constants.js';
 
+import {popupOpen, formInfo, nameInput, 
+    infoInput, popupOpenCard, formCard, 
+    nameInputCard, infoInputCard} 
+    from '../utils/constants.js';
 
-/* variables */
+
+/* Создание эксземляров класса */
 const popupInfo = new PopupWithForm('popupInfo', handleFormSubmit);
 popupInfo.setEventListeners();
-const popupOpen = document.querySelector('.profile-info__customization');
-const popupClose = document.getElementById('popupInfoClose');
-
-const formInfo = document.forms.popupFormInfo;
-const nameInput = formInfo.elements.name;
-const infoInput = formInfo.elements.info;
-
 
 const popupCard = new PopupWithForm('popupCard', (data) => {
     cardsList.renderCard(data);
@@ -24,23 +22,18 @@ const popupCard = new PopupWithForm('popupCard', (data) => {
 });
 popupCard.setEventListeners();
 
-const popupOpenCard = document.querySelector('.profile__button');
-const popupCloseCard = document.getElementById('popupCardClose');
-
-const formCard = document.forms.popupFormCard;
-const nameInputCard = formCard.elements.name;
-const infoInputCard = formCard.elements.link;
+const popupImage = new PopupWithImage('popupImg');
 
 const infoUser = new UserInfo({
     name: '.profile-info__name',
     info: '.profile-info__job'
 });
 
-const popupImage = new PopupWithImage('popupImg');
-export const imgPopup = document.getElementById('popupImg');
-const imgClose = document.getElementById('popupImgClose');
+const validation = (data, form) => {
+    const validate = new FormValidator(data);
+    validate.enableValidation(form);
+};
 
-/* functions */
 /* Загрузка начальных карточек */
 const cardsList = new Section({
     data: reversedCards,
@@ -55,9 +48,10 @@ const cardsList = new Section({
     },
 '.cards');
 
-cardsList.renderItems()
+cardsList.renderItems();
 
-/* Общие функции для Pop-up */
+/* functions */
+/* Функции очистки ошибки валидации */
 function removeError(input, output) {
     input.textContent ='';
     output.classList.remove('popup__input_data_error');
@@ -75,6 +69,7 @@ function errorRemover({
     removeError(inputErrorUrl, secondInputSelector);
 }
 
+/* Общие функции для Pop-up */
 export const enableSubmitButton = function (button, selector) {
     button.classList.remove(selector);
     button.disabled = false;
@@ -83,11 +78,6 @@ export const enableSubmitButton = function (button, selector) {
 export const disableSubmitButton = function (button, selector) {
     button.classList.add(selector);
     button.disabled = true;
-};
-
-const validation = (data, form) => {
-    const validate = new FormValidator(data);
-    validate.enableValidation(form);
 };
 
 /* Действия по нажатию на submit в формах */
@@ -119,8 +109,6 @@ popupOpen.addEventListener('click', function () {
     popupInfo.open();
 });
 
-popupClose.addEventListener('click', function () {closePopup(popupInfo)});
-
 popupOpenCard.addEventListener('click', function () {
     errorRemover({
         firstErrorSelector: (`place-input-error`),
@@ -137,7 +125,3 @@ popupOpenCard.addEventListener('click', function () {
 
     popupCard.open();
 });
-
-popupCloseCard.addEventListener('click', function () {closePopup(popupCard)});
-
-imgClose.addEventListener('click', function () {closePopup(popupImage)});

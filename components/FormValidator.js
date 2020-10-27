@@ -1,4 +1,4 @@
-import {disableSubmitButton, enableSubmitButton} from './index.js';
+import {disableSubmitButton, enableSubmitButton} from '../pages/index.js';
 
 export class FormValidator {
     constructor(data) {
