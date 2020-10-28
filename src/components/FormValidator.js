@@ -1,14 +1,22 @@
-import {disableSubmitButton, enableSubmitButton} from '../pages/index.js';
-
 export class FormValidator {
-    constructor(data) {
-        this._form = data.formSelector,
+    constructor(data, form) {
+        this._form = form,
         this._input = data.inputSelector,
         this._button = data.submitButtonSelector,
         this._buttonClass = data.inactiveButtonClass,
         this._inputErrorClass = data.inputErrorClass,
         this._errorClass = data.errorClass
     }
+
+    enableSubmitButton (button, selector) {
+      button.classList.remove(selector);
+      button.disabled = false;
+    };
+  
+    disableSubmitButton (button, selector) {
+      button.classList.add(selector);
+      button.disabled = true;
+    };
   
     /* Показ / скрытие сообщения об ошибке */
     _showInputError(form, input, errorMessage) {
@@ -43,9 +51,9 @@ export class FormValidator {
     /* Переключение классов для кнопки "submit" */
     _toggleButtonState(inputList, button) {
       if (this._hasInvalidInput(inputList)) {
-        disableSubmitButton(button, this._buttonClass);
+        this.disableSubmitButton(button, this._buttonClass);
       } else {
-        enableSubmitButton(button, this._buttonClass);
+        this.enableSubmitButton(button, this._buttonClass);
       }
     };
   
@@ -68,5 +76,22 @@ export class FormValidator {
           this._toggleButtonState(inputList, submitButtonElement);
         });
       });
+    }
+
+    _removeError(input, output) {
+      input.textContent ='';
+      output.classList.remove('popup__input_data_error');
     };
+  
+    errorRemover({
+      firstErrorSelector, 
+      secondErrorSelector,
+      firstInputSelector,
+      secondInputSelector
+    }) {
+      const inputErrorPlace = document.getElementById(firstErrorSelector);
+      const inputErrorUrl = document.getElementById(secondErrorSelector);
+      this._removeError(inputErrorPlace, firstInputSelector);
+      this._removeError(inputErrorUrl, secondInputSelector);
+    }
 }

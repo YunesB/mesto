@@ -25,19 +25,17 @@ const popupCard = new PopupWithForm('popupCard', (data) => {
 popupCard.setEventListeners();
 
 const popupImage = new PopupWithImage('popupImg');
+popupImage.setEventListeners();
 
-const infoUser = new UserInfo({
-    name: '.profile-info__name',
-    info: '.profile-info__job'
+const userInfo = new UserInfo({
+    nameSelector: '.profile-info__name',
+    infoSelector: '.profile-info__job'
 });
 
-const validation = (data, form) => {
-    const validate = new FormValidator(data);
-    validate.enableValidation(form);
-};
-
-validation(allSelectorClasses, formInfo);
-validation(allSelectorClasses, formCard);
+const infoFormValidator = new FormValidator(allSelectorClasses, formInfo);
+infoFormValidator.enableValidation(formInfo);
+const cardFormValidator = new FormValidator(allSelectorClasses, formCard);
+cardFormValidator.enableValidation(formCard);
 
 /* Загрузка начальных карточек */
 const cardsList = new Section({
@@ -56,73 +54,43 @@ const cardsList = new Section({
 cardsList.renderItems();
 
 /* functions */
-/* Функции очистки ошибки валидации */
-function removeError(input, output) {
-    input.textContent ='';
-    output.classList.remove('popup__input_data_error');
-};
-
-function errorRemover({
-    firstErrorSelector, 
-    secondErrorSelector,
-    firstInputSelector,
-    secondInputSelector
-}) {
-    const inputErrorPlace = document.getElementById(firstErrorSelector);
-    const inputErrorUrl = document.getElementById(secondErrorSelector);
-    removeError(inputErrorPlace, firstInputSelector);
-    removeError(inputErrorUrl, secondInputSelector);
-}
-
-/* Общие функции для Pop-up */
-export const enableSubmitButton = function (button, selector) {
-    button.classList.remove(selector);
-    button.disabled = false;
-};
-
-export const disableSubmitButton = function (button, selector) {
-    button.classList.add(selector);
-    button.disabled = true;
-};
-
 /* Действия по нажатию на submit в формах */
 function handleFormSubmit (data) {
-    infoUser.setUserInfo(data);
+    userInfo.setUserInfo(data);
     popupInfo.close();
 };
 
 
 /* event listeners */
 popupOpen.addEventListener('click', function () {
-    errorRemover({
+    const userData = userInfo.getUserInfo();
+    nameInput.value = userData.name;
+    infoInput.value = userData.info;
+
+    const submitBtn = formInfo.querySelector('.popup__button');
+    infoFormValidator.enableSubmitButton(submitBtn, allSelectorClasses.inactiveButtonClass);
+    infoFormValidator.errorRemover({
         firstErrorSelector: (`name-input-error`),
         secondErrorSelector: (`data-input-error`),
         firstInputSelector: nameInput,
         secondInputSelector: infoInput
     });
-    const userData = infoUser.getUserInfo();
-    nameInput.value = userData.name;
-    infoInput.value = userData.info;
-
-    const submitBtn = formInfo.querySelector('.popup__button');
-    enableSubmitButton(submitBtn, allSelectorClasses.inactiveButtonClass);
 
     popupInfo.open();
 });
 
 popupOpenCard.addEventListener('click', function () {
-    errorRemover({
+    nameInputCard.value = '';
+    infoInputCard.value = '';
+
+    const submitBtn = formCard.querySelector('.popup__button');
+    cardFormValidator.disableSubmitButton(submitBtn, allSelectorClasses.inactiveButtonClass);
+    cardFormValidator.errorRemover({
         firstErrorSelector: (`place-input-error`),
         secondErrorSelector: (`url-input-error`),
         firstInputSelector: nameInputCard,
         secondInputSelector: infoInputCard
     });
-
-    nameInputCard.value = '';
-    infoInputCard.value = '';
-
-    const submitBtn = formCard.querySelector('.popup__button');
-    disableSubmitButton(submitBtn, allSelectorClasses.inactiveButtonClass);
 
     popupCard.open();
 });
