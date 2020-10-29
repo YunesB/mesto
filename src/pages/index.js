@@ -33,9 +33,9 @@ const userInfo = new UserInfo({
 });
 
 const infoFormValidator = new FormValidator(allSelectorClasses, formInfo);
-infoFormValidator.enableValidation(formInfo);
+infoFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(allSelectorClasses, formCard);
-cardFormValidator.enableValidation(formCard);
+cardFormValidator.enableValidation();
 
 /* Загрузка начальных карточек */
 const cardsList = new Section({
@@ -43,7 +43,7 @@ const cardsList = new Section({
     renderer: (data) => {
         const card = new Card({
             data,
-            externalHandler: (img, title) => popupImage.open(img, title)}, 
+            handleImageClick: (img, title) => popupImage.open(img, title)}, 
             ".card-template");
         const cardElement = card.generateCard();
         cardsList.addItem(cardElement);
@@ -66,31 +66,27 @@ popupOpen.addEventListener('click', function () {
     const userData = userInfo.getUserInfo();
     nameInput.value = userData.name;
     infoInput.value = userData.info;
-
-    const submitBtn = formInfo.querySelector('.popup__button');
-    infoFormValidator.enableSubmitButton(submitBtn, allSelectorClasses.inactiveButtonClass);
-    infoFormValidator.errorRemover({
-        firstErrorSelector: (`name-input-error`),
-        secondErrorSelector: (`data-input-error`),
-        firstInputSelector: nameInput,
-        secondInputSelector: infoInput
-    });
-
+    infoFormValidator.enableSubmitButton();
+    infoFormValidator.removeErrors()
     popupInfo.open();
 });
+
+/* Ваш комментарий:
+"и нужно disableSubmitButton использовать тут - 
+ведь без проверки открывается форма, значит, нужно Неактивную кнопку делать, 
+как при добавлении карточки"
+
+Не совсем согласен, потому что тут в любом случае будут сохранены только валидные данные, 
+валидатор не даст сабмитнуть некорректный инпут, поэтому, на мой взгляд, кнопка сохранить 
+должна быть активна при открытии, исключительно в рамках корректного UX.
+
+В остальном большое Вам спасибо за ревью, код в FormValidator разобрал и отредактировал как Вы написали.
+*/
 
 popupOpenCard.addEventListener('click', function () {
     nameInputCard.value = '';
     infoInputCard.value = '';
-
-    const submitBtn = formCard.querySelector('.popup__button');
-    cardFormValidator.disableSubmitButton(submitBtn, allSelectorClasses.inactiveButtonClass);
-    cardFormValidator.errorRemover({
-        firstErrorSelector: (`place-input-error`),
-        secondErrorSelector: (`url-input-error`),
-        firstInputSelector: nameInputCard,
-        secondInputSelector: infoInputCard
-    });
-
+    cardFormValidator.disableSubmitButton();
+    cardFormValidator.removeErrors()
     popupCard.open();
 });

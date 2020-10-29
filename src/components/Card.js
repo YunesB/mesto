@@ -1,13 +1,13 @@
 export class Card {
-    constructor({data: {name, link}, externalHandler}, card) {
+    constructor({data: {name, link}, handleImageClick}, cardTemplate) {
         this._title = name,
         this._image = link,
-        this.externalHandler = externalHandler,
-        this._card = card        
+        this.handleImageClick = handleImageClick,
+        this._cardTemplate = cardTemplate        
     }
 
     _getTemplate() {
-        const cardElement = document.querySelector(this._card)
+        const cardElement = document.querySelector(this._cardTemplate)
         .content
         .querySelector('.card')
         .cloneNode(true);
@@ -35,7 +35,7 @@ export class Card {
     }
 
     _handleImageClick() {
-       this.externalHandler(this._image, this._title);
+       this.handleImageClick(this._image, this._title);
     }
 
     _setEventListeners() {
