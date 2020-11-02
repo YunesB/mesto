@@ -9,12 +9,14 @@ import {Section} from '../components/Section.js';
 import {reversedCards, allSelectorClasses} from '../utils/constants.js';
 
 import {popupOpen, formInfo, nameInput, 
-    infoInput, popupOpenCard, formCard, 
-    nameInputCard, infoInputCard} 
+    infoInput, popupOpenCard, popupOpenAvatar, formCard, 
+    nameInputCard, infoInputCard, formAvatar, infoInputAvatar, userAvatar} 
     from '../utils/constants.js';
 
-
 /* Создание эксземляров класса */
+const popupAvatar = new PopupWithForm('popupAvatar', handleAvatarChange);
+popupAvatar.setEventListeners();
+
 const popupInfo = new PopupWithForm('popupInfo', handleFormSubmit);
 popupInfo.setEventListeners();
 
@@ -32,6 +34,8 @@ const userInfo = new UserInfo({
     infoSelector: '.profile-info__job'
 });
 
+const avatarFormValidator = new FormValidator(allSelectorClasses, formAvatar);
+avatarFormValidator.enableValidation();
 const infoFormValidator = new FormValidator(allSelectorClasses, formInfo);
 infoFormValidator.enableValidation();
 const cardFormValidator = new FormValidator(allSelectorClasses, formCard);
@@ -60,8 +64,20 @@ function handleFormSubmit (data) {
     popupInfo.close();
 };
 
+function handleAvatarChange(data) {
+    userAvatar.src = data.link;
+    popupAvatar.close();
+}
+
 
 /* event listeners */
+popupOpenAvatar.addEventListener('click', function () {
+    infoInputAvatar.value = '';
+    avatarFormValidator.disableSubmitButton();
+    avatarFormValidator.removeErrors()
+    popupAvatar.open();
+});
+
 popupOpen.addEventListener('click', function () {
     const userData = userInfo.getUserInfo();
     nameInput.value = userData.name;
@@ -71,22 +87,10 @@ popupOpen.addEventListener('click', function () {
     popupInfo.open();
 });
 
-/* Ваш комментарий:
-"и нужно disableSubmitButton использовать тут - 
-ведь без проверки открывается форма, значит, нужно Неактивную кнопку делать, 
-как при добавлении карточки"
-
-Не совсем согласен, потому что тут в любом случае будут сохранены только валидные данные, 
-валидатор не даст сабмитнуть некорректный инпут, поэтому, на мой взгляд, кнопка сохранить 
-должна быть активна при открытии, исключительно в рамках корректного UX.
-
-В остальном большое Вам спасибо за ревью, код в FormValidator разобрал и отредактировал как Вы написали.
-*/
-
 popupOpenCard.addEventListener('click', function () {
     nameInputCard.value = '';
     infoInputCard.value = '';
     cardFormValidator.disableSubmitButton();
-    cardFormValidator.removeErrors()
+    cardFormValidator.removeErrors();
     popupCard.open();
 });
