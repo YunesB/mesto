@@ -30,8 +30,12 @@ export class Card {
     }
 
     _handleDltClick(evt) {
-        const listItem = evt.target.closest('.card');
-        listItem.remove();
+        const currentCard = evt.target.closest('.card');
+        const popup = document.getElementById('popupConfirm');   
+        popup.classList.add('popup_opened');
+        popup.addEventListener('submit', () => {
+            currentCard.remove();
+        });
     }
 
     _handleImageClick() {
