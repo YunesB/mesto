@@ -4,11 +4,21 @@ export class PopupWithForm extends Popup {
     constructor(popupSelector, handleFormSubmit) {
         super(popupSelector);
         this._handleFormSubmit = handleFormSubmit;
-        this._form = this._popup.querySelector('.popup__form')
+        this._form = this._popup.querySelector('.popup__form');
+        this._submit = this._form.querySelector('.popup__button');
+        this._defaultSubmit = this._submit.textContent
     }
 
     open() {
         super.open();
+    }
+
+    editButtonText(text) {    
+        this._submit.textContent = text;
+    }
+
+    resetButtonText() {
+        this._submit.textContent = this._defaultSubmit;
     }
 
     setEventListeners() {
