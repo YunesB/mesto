@@ -33,11 +33,7 @@ export class Card {
     }
 
     _isOwned(user) {
-        if (user._id === localStorage.userID) { 
-                return true;
-           } else {
-                return false;
-           };
+        return user._id === localStorage.userID;
     }
 
     initialLikes() {

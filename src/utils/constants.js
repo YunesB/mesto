@@ -22,3 +22,5 @@ export const infoInput = formInfo.elements.info;
 export const formCard = document.forms.popupFormCard;
 export const nameInputCard = formCard.elements.name;
 export const infoInputCard = formCard.elements.link;
+
+export const popupLoading = document.getElementById('popupLoading');

@@ -4,6 +4,13 @@ export class Api {
         this._token = token,
         this._cohort = cohort
     }
+
+    handleResponse (res) {
+      if (!res.ok) {
+        return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
+      }
+      return res.json();
+    }
   
     getInitialCards() {
         return fetch(`${this._address}/${this._cohort}/cards`, 
@@ -12,13 +19,10 @@ export class Api {
               authorization: this._token
             }
         })
-        .then(res => {
-              if (res.ok) {
-                  return res.json();
-              }
-            return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-        });
-    }
+        .then((res) =>
+            this.handleResponse(res)
+        )
+    };
 
     addCard(data) {
       return fetch(`${this._address}/${this._cohort}/cards`, {
@@ -32,12 +36,9 @@ export class Api {
               link: data.link
           }),
       })
-      .then(res => {
-          if(res.ok) {
-              return res.json();
-          }
-          return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-          })
+      .then((res) =>
+          this.handleResponse(res)
+      )
     }
 
     deleteCard(card) {
@@ -64,12 +65,9 @@ export class Api {
             'Content-Type': 'application/json'
           }
       })
-      .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-          return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-      });
+      .then((res) =>
+          this.handleResponse(res)
+      )
     }
     
     setUserInfo(name, info) {
@@ -85,12 +83,9 @@ export class Api {
             about: info
           })
       })
-      .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-          return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-      });
+      .then((res) =>
+          this.handleResponse(res)
+      )
     }
 
     setUserAva(data) {
@@ -105,12 +100,9 @@ export class Api {
             avatar: data
           })
       })
-      .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-          return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-      });
+      .then((res) =>
+          this.handleResponse(res)
+      )
     }
 
     postLike(card) {
@@ -122,12 +114,9 @@ export class Api {
             'Content-Type': 'application/json'
           }
       })
-      .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-          return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-      });
+      .then((res) =>
+          this.handleResponse(res)
+      )
     }
 
     removeLike(card) {
@@ -139,11 +128,8 @@ export class Api {
             'Content-Type': 'application/json'
           }
       })
-      .then(res => {
-            if (res.ok) {
-                return res.json();
-            }
-          return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
-      });
+      .then((res) =>
+          this.handleResponse(res)
+      )
     }
 }

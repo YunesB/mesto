@@ -13,7 +13,8 @@ import {allSelectorClasses} from '../utils/constants.js';
 import {popupOpen, formInfo, nameInput, 
     infoInput, popupOpenCard, popupOpenAvatar, 
     formCard, nameInputCard, infoInputCard, 
-    formAvatar, infoInputAvatar, userAvatar} 
+    formAvatar, infoInputAvatar, userAvatar,
+    popupLoading} 
     from '../utils/constants.js';
 
 /* Создание экземляров класса */
@@ -149,22 +150,19 @@ const handleCardDelete = (card) => {
     })
 }
 
-api.getInitialCards()
-    .then((data) => {
-        cardsList.renderItems(data);
+Promise.all([
+    api.getUserInfo(),
+    api.getInitialCards()
+  ])
+    .then(([userData, initialCards]) => {
+      popupLoading.classList.remove('popup_opened');
+      userInfo.setUserInfo(userData);
+      localStorage.setItem("userID", userData._id);
+      cardsList.renderItems(initialCards);
     })
-    .catch ((error) => {
-       console.log(error);
-    });
-
-api.getUserInfo()
-    .then((data) => {
-        userInfo.setUserInfo(data);
-        localStorage.setItem("userID", data._id)
-    })
-    .catch ((error) => {
-       console.log(error);
-    });
+    .catch((error) => {
+      console.log(error);
+    }); 
 
 /* event listeners */
 popupOpenAvatar.addEventListener('click', function () {
