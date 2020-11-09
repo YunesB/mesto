@@ -5,6 +5,7 @@ import {Card} from '../components/Card.js';
 import {FormValidator} from '../components/FormValidator.js';
 import {PopupWithImage} from '../components/PopupWithImage.js';
 import {PopupWithForm} from '../components/PopupWithForm.js';
+import {PopupConfirm} from '../components/PopupConfirm.js';
 import {UserInfo} from '../components/UserInfo.js';
 import {Section} from '../components/Section.js';
 import {allSelectorClasses} from '../utils/constants.js';
@@ -32,7 +33,6 @@ const popupAvatar = new PopupWithForm('popupAvatar', (data) => {
     api.setUserAva(data.link)
         .then(() => {
             userAvatar.src = data.link;
-
         })
         .catch ((error) => {
             console.log(error);
@@ -60,19 +60,15 @@ const popupInfo = new PopupWithForm('popupInfo', (data) => {
 });
 popupInfo.setEventListeners();
 
-const popupConfirm = new PopupWithForm('popupConfirm', handleCardDelete);
+const popupConfirm = new PopupConfirm('popupConfirm', () => {
+});
 popupConfirm.setEventListeners();
 
 const popupCard = new PopupWithForm('popupCard', (data) => {
     popupCard.editButtonText("Сохранение...");
     api.addCard(data)
         .then(data => {
-            const card = new Card({ 
-                data, 
-                handleImageClick: (img, title) => popupImage.open(img, title)
-            }, ".card-template");
-            const cardElement = card.generateCard();
-            cardsList.addItem(cardElement);
+            createCard(data);
         })
         .finally(() => {
             popupCard.close();
@@ -94,19 +90,74 @@ cardFormValidator.enableValidation();
 /* Загрузка начальных карточек */
 const cardsList = new Section({
     renderer: (data) => {
-        const card = new Card({
+        createCard(data);
+    }
+ }, '.cards');
+
+const createCard = (data) => {
+    const card = new Card({
         data,
-        handleImageClick: (img, title) => popupImage.open(img, title)
+        handleImageClick: (img, title) => popupImage.open(img, title),
+        handleDltClick: () => handleCardDelete(card),
+        handleLikeClick: (evt) => handleCardLike(evt, card)
         }, ".card-template");
         
     const cardElement = card.generateCard();
     cardsList.addItem(cardElement);
+}
+
+const handleCardDelete = (card) => {
+    popupConfirm.open();
+    popupConfirm.setSubmitCallback(() => {
+        popupConfirm.editButtonText("Сохранение...");
+        api.deleteCard(card._id)
+        .then(() => {
+            card.removeCard();
+            popupConfirm.close();
+        })
+        .catch ((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            popupConfirm.close();
+            popupConfirm.resetButtonText();
+        });
+    })
+}
+
+const handleCardLike = (evt, card) => {
+    if (!evt.target.classList.contains('card__like_state_posted')) {    
+        api.postLike(card)
+        .then((res) => {
+            evt.target.classList.add('card__like_state_posted')
+            card.setLikeCounter(res.likes);
+            console.log(res);
+            console.log(res.likes);
+            console.log(res.likes.length);
+        })
+        .catch ((error) => {
+            console.log(error);
+        });
+    } else {
+        api.removeLike(card)
+        .then((res) => {
+            evt.target.classList.remove('card__like_state_posted')
+            card.setLikeCounter(res.likes);
+            console.log(res);
+            console.log(res.likes);
+            console.log(res.likes.length);
+        })
+        .catch ((error) => {
+            console.log(error);
+        });
     }
- }, '.cards');
+}
 
 api.getInitialCards()
     .then((data) => {
         cardsList.renderItems(data);
+        if (data.owner)
+        console.log(data);
     })
     .catch ((error) => {
        console.log(error);
@@ -123,14 +174,6 @@ api.getUserInfo()
 
 /* functions */
 /* Действия по нажатию на submit в формах */
-function handleAvatarChange(data) {
-    
-};
-
-function handleCardDelete() {
-    popupConfirm.close();
-}
-
 
 /* event listeners */
 popupOpenAvatar.addEventListener('click', function () {

@@ -1,8 +1,8 @@
 export class Api {
     constructor({address, token, cohort}) {
-        this._address = address;
-        this._token = token;
-        this._cohort = cohort;
+        this._address = address,
+        this._token = token,
+        this._cohort = cohort
     }
   
     getInitialCards() {
@@ -31,6 +31,22 @@ export class Api {
               name: data.name,
               link: data.link
           }),
+      })
+      .then(res => {
+          if(res.ok) {
+              return res.json();
+          }
+          return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
+          })
+    }
+
+    deleteCard(card) {
+      return fetch(`${this._address}/${this._cohort}/cards/${card}`, {
+          method: 'DELETE',
+          headers: {
+              authorization: this._token,
+              'Content-Type': 'application/json'
+          }
       })
       .then(res => {
           if(res.ok) {
@@ -88,6 +104,40 @@ export class Api {
           body: JSON.stringify({
             avatar: data
           })
+      })
+      .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+          return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
+      });
+    }
+
+    postLike(card) {
+      return fetch(`${this._address}/${this._cohort}/cards/likes/${card._id}`, 
+      {
+          method: 'PUT',
+          headers: {
+            authorization: this._token,
+            'Content-Type': 'application/json'
+          }
+      })
+      .then(res => {
+            if (res.ok) {
+                return res.json();
+            }
+          return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`);
+      });
+    }
+
+    removeLike(card) {
+      return fetch(`${this._address}/${this._cohort}/cards/likes/${card._id}`, 
+      {
+          method: 'DELETE',
+          headers: {
+            authorization: this._token,
+            'Content-Type': 'application/json'
+          }
       })
       .then(res => {
             if (res.ok) {
