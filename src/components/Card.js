@@ -8,9 +8,7 @@ export class Card {
         this._cardTemplate = cardTemplate,
         this._id = _id,
         this._likes = likes,
-        this._owner = ownerб
-        // const isLiked = user => user._id === localStorage.userId,
-        // if ()
+        this._owner = owner;
     }
 
     _getTemplate() {
@@ -32,6 +30,32 @@ export class Card {
         this._setEventListeners();
 
         return this._element;
+    }
+
+    _isOwned(user) {
+        if (user._id === localStorage.userID) { 
+                return true;
+           } else {
+                return false;
+           };
+    }
+
+    initialLikes() {
+        this._likes.forEach((user) => {
+            if(this._isOwned(user)) {
+                this._toggleLikestate();
+            }
+        });
+    }
+
+    handleDeleteButton(data) {
+            if(this._isOwned(data)) {
+                this._element.querySelector('.card__delete-button').style.display = 'flex';
+            }; 
+    }
+
+    _toggleLikestate() {
+        this._element.querySelector('.card__like').classList.toggle('card__like_state_posted')
     }
 
     setLikeCounter(data) {

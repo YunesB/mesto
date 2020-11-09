@@ -104,6 +104,8 @@ const createCard = (data) => {
         
     const cardElement = card.generateCard();
     cardsList.addItem(cardElement);
+    card.initialLikes();
+    card.handleDeleteButton(data.owner);
 }
 
 const handleCardDelete = (card) => {
@@ -131,9 +133,6 @@ const handleCardLike = (evt, card) => {
         .then((res) => {
             evt.target.classList.add('card__like_state_posted')
             card.setLikeCounter(res.likes);
-            console.log(res);
-            console.log(res.likes);
-            console.log(res.likes.length);
         })
         .catch ((error) => {
             console.log(error);
@@ -143,9 +142,6 @@ const handleCardLike = (evt, card) => {
         .then((res) => {
             evt.target.classList.remove('card__like_state_posted')
             card.setLikeCounter(res.likes);
-            console.log(res);
-            console.log(res.likes);
-            console.log(res.likes.length);
         })
         .catch ((error) => {
             console.log(error);
@@ -156,8 +152,6 @@ const handleCardLike = (evt, card) => {
 api.getInitialCards()
     .then((data) => {
         cardsList.renderItems(data);
-        if (data.owner)
-        console.log(data);
     })
     .catch ((error) => {
        console.log(error);
@@ -166,6 +160,7 @@ api.getInitialCards()
 api.getUserInfo()
     .then((data) => {
         userInfo.setUserInfo(data);
+        localStorage.setItem("userID", data._id)
     })
     .catch ((error) => {
        console.log(error);
