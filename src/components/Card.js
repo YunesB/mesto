@@ -54,12 +54,17 @@ export class Card {
             }; 
     }
 
-    _toggleLikestate() {
-        this._element.querySelector('.card__like').classList.toggle('card__like_state_posted')
-    }
-
     setLikeCounter(data) {
         this._likeCounter.textContent = data.length;
+    }
+
+    removeCard() {
+        this._element.remove();
+        this._element = null;
+    }
+
+    _toggleLikestate() {
+        this._element.querySelector('.card__like').classList.toggle('card__like_state_posted');
     }
 
     _handleLikeClick(evt, card) {
@@ -84,14 +89,5 @@ export class Card {
         this._cardImg.addEventListener('click', () => {
             this._handleImageClick();
         });
-    }
-
-    removeCard() {
-        this._element.remove();
-        this._element = null;
-    }
-
-    removeDltButton() {
-        this._element.querySelector('.card__delete-button').style.display = 'none';
     }
 }

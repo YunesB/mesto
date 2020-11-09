@@ -13,6 +13,11 @@ export class PopupWithForm extends Popup {
         super.open();
     }
 
+    close() {
+        super.close();
+        this._form.reset();
+    }
+
     editButtonText(text) {    
         this._submit.textContent = text;
     }
@@ -21,14 +26,6 @@ export class PopupWithForm extends Popup {
         this._submit.textContent = this._defaultSubmit;
     }
 
-    setEventListeners() {
-        super.setEventListeners();
-        this._form.addEventListener('submit', (evt) => {
-            evt.preventDefault();
-            this._handleFormSubmit(this._getInputValues());
-        });
-    }
-    
     _getInputValues() {
         this._inputList = this._popup.querySelectorAll('.popup__input');
         
@@ -37,8 +34,11 @@ export class PopupWithForm extends Popup {
         return this._formValues;
     }
 
-    close() {
-        super.close();
-        this._form.reset();
+    setEventListeners() {
+        super.setEventListeners();
+        this._form.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+            this._handleFormSubmit(this._getInputValues());
+        });
     }
 }

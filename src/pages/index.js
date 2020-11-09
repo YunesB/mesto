@@ -11,8 +11,9 @@ import {Section} from '../components/Section.js';
 import {allSelectorClasses} from '../utils/constants.js';
 
 import {popupOpen, formInfo, nameInput, 
-    infoInput, popupOpenCard, popupOpenAvatar, formCard, 
-    nameInputCard, infoInputCard, formAvatar, infoInputAvatar, userAvatar} 
+    infoInput, popupOpenCard, popupOpenAvatar, 
+    formCard, nameInputCard, infoInputCard, 
+    formAvatar, infoInputAvatar, userAvatar} 
     from '../utils/constants.js';
 
 /* Создание экземляров класса */
@@ -60,8 +61,7 @@ const popupInfo = new PopupWithForm('popupInfo', (data) => {
 });
 popupInfo.setEventListeners();
 
-const popupConfirm = new PopupConfirm('popupConfirm', () => {
-});
+const popupConfirm = new PopupConfirm('popupConfirm');
 popupConfirm.setEventListeners();
 
 const popupCard = new PopupWithForm('popupCard', (data) => {
@@ -108,25 +108,6 @@ const createCard = (data) => {
     card.handleDeleteButton(data.owner);
 }
 
-const handleCardDelete = (card) => {
-    popupConfirm.open();
-    popupConfirm.setSubmitCallback(() => {
-        popupConfirm.editButtonText("Сохранение...");
-        api.deleteCard(card._id)
-        .then(() => {
-            card.removeCard();
-            popupConfirm.close();
-        })
-        .catch ((error) => {
-            console.log(error);
-        })
-        .finally(() => {
-            popupConfirm.close();
-            popupConfirm.resetButtonText();
-        });
-    })
-}
-
 const handleCardLike = (evt, card) => {
     if (!evt.target.classList.contains('card__like_state_posted')) {    
         api.postLike(card)
@@ -149,6 +130,25 @@ const handleCardLike = (evt, card) => {
     }
 }
 
+const handleCardDelete = (card) => {
+    popupConfirm.open();
+    popupConfirm.setSubmitCallback(() => {
+        popupConfirm.editButtonText("Сохранение...");
+        api.deleteCard(card._id)
+        .then(() => {
+            card.removeCard();
+            popupConfirm.close();
+        })
+        .catch ((error) => {
+            console.log(error);
+        })
+        .finally(() => {
+            popupConfirm.close();
+            popupConfirm.resetButtonText();
+        });
+    })
+}
+
 api.getInitialCards()
     .then((data) => {
         cardsList.renderItems(data);
@@ -165,10 +165,6 @@ api.getUserInfo()
     .catch ((error) => {
        console.log(error);
     });
-
-
-/* functions */
-/* Действия по нажатию на submit в формах */
 
 /* event listeners */
 popupOpenAvatar.addEventListener('click', function () {

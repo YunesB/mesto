@@ -1,9 +1,8 @@
 import {Popup} from './Popup.js';
 
 export class PopupConfirm extends Popup {
-    constructor(popupSelector, handleFormSubmit) {
+    constructor(popupSelector) {
         super(popupSelector);
-        this._handleFormSubmit = handleFormSubmit;
         this._form = this._popup.querySelector('.popup__form');
         this._submit = this._form.querySelector('.popup__button');
         this._defaultSubmit = this._submit.textContent
