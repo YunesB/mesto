@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "rm -rf dist && webpack",
+    "build": "rd /s /q dist && webpack",
     "dev": "webpack-dev-server --open",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
