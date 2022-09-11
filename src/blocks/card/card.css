@@ -1,22 +1,28 @@
 .card {
-    display: flex;
-    flex-direction: column;
-    background-color: white;
-    color: black;
-    font-weight: 900;
-    font-size: 24px;
-    line-height: 29px;
-    border-radius: 10px;
-    margin: 0 auto;
-    padding: 0;
-    width: 282px;
-    max-height: 361px; 
-    position: relative;
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29px;
+  border-radius: 10px;
+  margin: 0 auto;
+  padding: 0;
+  width: 282px;
+  height: 361px;
+  position: relative;
+  overflow: hidden;
+  justify-content: flex-end;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 @media screen and (max-width: 320px) {
-    .card {
-        margin: 0;
-    }
+  .card {
+    margin: 0;
+  }
 }
